@@ -1,0 +1,112 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Страница-1" id="DuzJQ56TelnvGb8z9xoH">
+    <mxGraphModel dx="1885" dy="1071" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TnVz_MsdwehzfxF4lf07-1" parent="1" style="ellipse;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#000;strokeColor=#000;fontColor=light-dark(#333333,#cccccc);" value="" vertex="1">
+          <mxGeometry height="15" width="15" x="325" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-2" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Client selects payment method" vertex="1">
+          <mxGeometry height="78" width="260" x="203" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-3" parent="1" style="rhombus;strokeWidth=2;whiteSpace=wrap;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Online payment?" vertex="1">
+          <mxGeometry height="173" width="173" x="246" y="213" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-4" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Enter card details" vertex="1">
+          <mxGeometry height="54" width="188" x="115" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-5" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Process transaction" vertex="1">
+          <mxGeometry height="54" width="198" x="30" y="564" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-6" parent="1" style="rhombus;strokeWidth=2;whiteSpace=wrap;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Transaction successful?" vertex="1">
+          <mxGeometry height="219" width="219" x="20" y="668" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-7" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Confirm order" vertex="1">
+          <mxGeometry height="54" width="160" x="29" y="973" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-8" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Show error" vertex="1">
+          <mxGeometry height="54" width="138" x="239" y="973" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-9" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Confirm order with cash on delivery" vertex="1">
+          <mxGeometry height="78" width="260" x="427" y="961" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-10" parent="1" style="ellipse;aspect=fixed;strokeWidth=4;whiteSpace=wrap;fillColor=#fff;strokeColor=#000;fontColor=light-dark(#333333,#cccccc);" value="" vertex="1">
+          <mxGeometry height="15" width="15" x="325" y="1089" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-11" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-1" style="curved=1;startArrow=none;endArrow=block;exitX=0.53;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="TnVz_MsdwehzfxF4lf07-2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-12" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-2" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="TnVz_MsdwehzfxF4lf07-3" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-13" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-3" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=1;entryX=0.5;entryY=0.01;rounded=0;" target="TnVz_MsdwehzfxF4lf07-4" value="Yes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="209" y="423" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-14" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-4" style="curved=1;startArrow=none;endArrow=block;exitX=0.28;exitY=1.01;entryX=0.5;entryY=0.01;rounded=0;" target="TnVz_MsdwehzfxF4lf07-5" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="129" y="539" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-15" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-5" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1.01;entryX=0.5;entryY=0;rounded=0;" target="TnVz_MsdwehzfxF4lf07-6" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-16" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-6" style="curved=1;startArrow=none;endArrow=block;exitX=0.43;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="TnVz_MsdwehzfxF4lf07-7" value="Yes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="109" y="924" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-17" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-6" style="curved=1;startArrow=none;endArrow=block;exitX=0.84;exitY=1;entryX=0.3;entryY=0;rounded=0;" target="TnVz_MsdwehzfxF4lf07-8" value="No">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="229" y="924" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-18" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-8" style="curved=1;startArrow=none;endArrow=block;exitX=0.78;exitY=0;entryX=1;entryY=0.94;rounded=0;" target="TnVz_MsdwehzfxF4lf07-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="418" y="924" />
+              <mxPoint x="418" y="539" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-19" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-3" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.78;entryX=0.5;entryY=0;rounded=0;" target="TnVz_MsdwehzfxF4lf07-9" value="No">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="557" y="423" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-20" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-7" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.03;entryY=0.44;rounded=0;" target="TnVz_MsdwehzfxF4lf07-10" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="109" y="1064" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-21" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-9" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=1.03;entryY=0.44;rounded=0;" target="TnVz_MsdwehzfxF4lf07-10" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="557" y="1064" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
