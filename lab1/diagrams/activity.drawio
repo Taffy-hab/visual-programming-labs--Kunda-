@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Страница-1" id="DuzJQ56TelnvGb8z9xoH">
-    <mxGraphModel dx="1885" dy="1071" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2020" dy="1073" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -33,6 +33,9 @@
         </mxCell>
         <mxCell id="TnVz_MsdwehzfxF4lf07-10" parent="1" style="ellipse;aspect=fixed;strokeWidth=4;whiteSpace=wrap;fillColor=#fff;strokeColor=#000;fontColor=light-dark(#333333,#cccccc);" value="" vertex="1">
           <mxGeometry height="15" width="15" x="325" y="1089" as="geometry" />
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-22" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Send receipt by email" vertex="1">
+          <mxGeometry height="54" width="180" x="19" y="1060" as="geometry" />
         </mxCell>
         <mxCell id="TnVz_MsdwehzfxF4lf07-11" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-1" style="curved=1;startArrow=none;endArrow=block;exitX=0.53;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="TnVz_MsdwehzfxF4lf07-2" value="">
           <mxGeometry relative="1" as="geometry">
@@ -92,10 +95,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="TnVz_MsdwehzfxF4lf07-20" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-7" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.03;entryY=0.44;rounded=0;" target="TnVz_MsdwehzfxF4lf07-10" value="">
+        <mxCell id="TnVz_MsdwehzfxF4lf07-20" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-7" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="TnVz_MsdwehzfxF4lf07-22" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="109" y="1064" />
+              <mxPoint x="109" y="1040" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -103,6 +106,13 @@
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="557" y="1064" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TnVz_MsdwehzfxF4lf07-23" edge="1" parent="1" source="TnVz_MsdwehzfxF4lf07-22" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;rounded=0;" target="TnVz_MsdwehzfxF4lf07-10" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="1087" />
             </Array>
           </mxGeometry>
         </mxCell>

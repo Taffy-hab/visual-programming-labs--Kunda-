@@ -1,4 +1,4 @@
-# Sequence Diagram — Заказ еды в ресторане с доставкой
+# Sequence Diagram — Заказ еды с доставкой
 
 ```mermaid
 sequenceDiagram
@@ -7,6 +7,7 @@ sequenceDiagram
     participant P as Платёжный сервис
     participant K as Кухня
     participant D as Курьер
+    participant S as SMS-сервис
 
     C->>A: Выбрать блюда и оформить заказ
     A->>C: Показать итоговую сумму
@@ -18,6 +19,9 @@ sequenceDiagram
     else Оплата при получении
         A->>A: Заказ подтверждён без списания
     end
+
+    A->>S: Отправить SMS-подтверждение
+    S-->>C: SMS с номером заказа
 
     A->>K: Передать заказ на готовку
     K-->>A: Заказ готов
