@@ -16,12 +16,12 @@
 ## 2. Диаграммы
 
 ### 2.1. BPMN
-![BPMN](diagrams/process-bpmn.png)
+![BPMN](diagrams/process.png)
 
 Исходник: `diagrams/process.bpmn`
 
 ### 2.2. UML Activity
-![UML Activity](diagrams/activity-uml.png)
+![UML Activity](diagrams/activity.drawio.png)
 
 Исходник: `diagrams/activity.drawio`
 
