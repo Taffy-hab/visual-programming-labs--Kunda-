@@ -59,13 +59,11 @@
         "y": 120,
         "wires": [
             [
-                "a61b529ed4e366f5"
-            ],
-            [
+                "a61b529ed4e366f5",
                 "c242e5829cbac485"
             ]
         ],
-        "func": "// Лабораторная №2, flow-09: имитация датчика для dashboard\nconst value = 18 + Math.random() * 10;\nmsg.payload = Math.round(value * 10) / 10;\nreturn msg;",
+        "func": "// Лабораторная №2, flow-09: имитация датчика для dashboard\nconst value = 18 + Math.random() * 10;\nmsg.topic = \"temp\";\nmsg.payload = Math.round(value * 10) / 10;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
