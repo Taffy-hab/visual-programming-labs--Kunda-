@@ -1,0 +1,13 @@
+# Node-RED user directory (~/.node-red) — локальные артефакты, не коммитим
+node_modules/
+.node-red/
+*.log
+
+# Локальные данные лабораторной №2
+lab2-data.json
+
+# Служебные файлы ОС и редакторов
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
