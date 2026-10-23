@@ -1,0 +1,55 @@
+[
+    {
+        "id": "70ab123900b01819",
+        "type": "tab",
+        "label": "Lab2-01 inject/debug",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a258462c220b9a5c",
+        "type": "inject",
+        "z": "70ab123900b01819",
+        "name": "Фамилия каждые 5 с",
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "f9bf83d8a226e418"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "topic": "lab2/kunda/basic",
+        "payload": "Кунда",
+        "payloadType": "str"
+    },
+    {
+        "id": "f9bf83d8a226e418",
+        "type": "debug",
+        "z": "70ab123900b01819",
+        "name": "complete msg",
+        "x": 460,
+        "y": 120,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto"
+    }
+]
