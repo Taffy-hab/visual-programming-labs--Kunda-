@@ -1,0 +1,131 @@
+[
+    {
+        "id": "9e5a7daed8e7714e",
+        "type": "tab",
+        "label": "Lab2-11 files",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "41788241140eba8c",
+        "type": "inject",
+        "z": "9e5a7daed8e7714e",
+        "name": "записать в файл",
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "35252ba412a9a326"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"author\":\"kunda\",\"lab\":2}",
+        "payloadType": "json"
+    },
+    {
+        "id": "35252ba412a9a326",
+        "type": "function",
+        "z": "9e5a7daed8e7714e",
+        "name": "ts + JSON.stringify",
+        "x": 400,
+        "y": 100,
+        "wires": [
+            [
+                "95fafc8ce8446723"
+            ]
+        ],
+        "func": "// Лабораторная №2, flow-11: подготовка данных для записи\nconst data = {\n    author: \"kunda\",\n    student: \"Кунда\",\n    group: \"УИР-241\",\n    lab: 2,\n    ts: new Date().toISOString(),\n    payload: msg.payload\n};\nmsg.payload = JSON.stringify(data, null, 2);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": []
+    },
+    {
+        "id": "95fafc8ce8446723",
+        "type": "file",
+        "z": "9e5a7daed8e7714e",
+        "name": "запись C:/Users/kakah/lab2-data.json",
+        "filename": "C:/Users/kakah/lab2-data.json",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 650,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f5335cac465ff253",
+        "type": "inject",
+        "z": "9e5a7daed8e7714e",
+        "name": "прочитать из файла",
+        "x": 180,
+        "y": 200,
+        "wires": [
+            [
+                "e6f1c2b9898f5a49"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date"
+    },
+    {
+        "id": "e6f1c2b9898f5a49",
+        "type": "file in",
+        "z": "9e5a7daed8e7714e",
+        "name": "C:/Users/kakah/lab2-data.json",
+        "filename": "C:/Users/kakah/lab2-data.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "encoding": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 400,
+        "y": 200,
+        "wires": [
+            [
+                "36be1051f67ed64c"
+            ]
+        ]
+    },
+    {
+        "id": "36be1051f67ed64c",
+        "type": "debug",
+        "z": "9e5a7daed8e7714e",
+        "name": "complete msg",
+        "x": 640,
+        "y": 200,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto"
+    }
+]

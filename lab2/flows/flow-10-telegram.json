@@ -1,0 +1,72 @@
+[
+    {
+        "id": "393843b13b8e5ec3",
+        "type": "tab",
+        "label": "Lab2-10 telegram",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "69c1a5aabf473f78",
+        "type": "telegram bot",
+        "botname": "tvl_lab2_kunda_bot",
+        "usename": true,
+        "token": "",
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "",
+        "socksv": "5",
+        "socksusername": "",
+        "sockspassword": "",
+        "chatId": ""
+    },
+    {
+        "id": "3c4e013bfa2170b8",
+        "type": "telegram receiver",
+        "z": "393843b13b8e5ec3",
+        "name": "приём сообщений",
+        "bot": "69c1a5aabf473f78",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "fb7f59039846b232"
+            ]
+        ]
+    },
+    {
+        "id": "fb7f59039846b232",
+        "type": "function",
+        "z": "393843b13b8e5ec3",
+        "name": "/start, /time, эхо",
+        "x": 420,
+        "y": 120,
+        "wires": [
+            [
+                "1f99c632b3dc3746"
+            ]
+        ],
+        "func": "// Лабораторная №2, flow-10: обработка команд Telegram\nconst text = (msg.payload && msg.payload.content) ? msg.payload.content : \"\";\nconst chatId = msg.payload ? msg.payload.chatId : null;\nlet answer;\n\nif (text === \"/start\") {\n    answer = \"Привет! Я бот lab2.\";\n} else if (text === \"/time\") {\n    answer = \"Текущее время: \" + new Date().toLocaleString(\"ru-RU\");\n} else {\n    answer = \"Эхо: \" + text;\n}\n\nmsg.payload = {\n    chatId: chatId,\n    type: \"message\",\n    content: answer\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": []
+    },
+    {
+        "id": "1f99c632b3dc3746",
+        "type": "telegram sender",
+        "z": "393843b13b8e5ec3",
+        "name": "ответ",
+        "bot": "69c1a5aabf473f78",
+        "hasoutput": false,
+        "x": 660,
+        "y": 120,
+        "wires": []
+    }
+]

@@ -1,0 +1,138 @@
+[
+    {
+        "id": "5828cd6608ccedf0",
+        "type": "tab",
+        "label": "Lab2-12 context",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3dd6fc599064e2ca",
+        "type": "inject",
+        "z": "5828cd6608ccedf0",
+        "name": "+1",
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "e731aaa39cb04120"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num"
+    },
+    {
+        "id": "e731aaa39cb04120",
+        "type": "function",
+        "z": "5828cd6608ccedf0",
+        "name": "counter + 1 (flow)",
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "ee54665636ad33f8"
+            ]
+        ],
+        "func": "// Лабораторная №2, flow-12: счётчик в flow context (persistent)\nlet counter = flow.get(\"counter\") || 0;\ncounter += 1;\nflow.set(\"counter\", counter);\nmsg.payload = { counter: counter };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": []
+    },
+    {
+        "id": "ee54665636ad33f8",
+        "type": "debug",
+        "z": "5828cd6608ccedf0",
+        "name": "counter",
+        "x": 630,
+        "y": 120,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto"
+    },
+    {
+        "id": "01f893a8300c93bf",
+        "type": "inject",
+        "z": "5828cd6608ccedf0",
+        "name": "reset",
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "3a39d2c7ce58ee4a"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "reset",
+        "payloadType": "str"
+    },
+    {
+        "id": "3a39d2c7ce58ee4a",
+        "type": "change",
+        "z": "5828cd6608ccedf0",
+        "name": "delete flow.counter",
+        "x": 360,
+        "y": 220,
+        "wires": [
+            [
+                "1a5a89ddce2a5ed8"
+            ]
+        ],
+        "rules": [
+            {
+                "t": "delete",
+                "p": "counter",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false
+    },
+    {
+        "id": "1a5a89ddce2a5ed8",
+        "type": "debug",
+        "z": "5828cd6608ccedf0",
+        "name": "reset done",
+        "x": 620,
+        "y": 220,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto"
+    }
+]
