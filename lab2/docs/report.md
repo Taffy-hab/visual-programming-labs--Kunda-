@@ -214,7 +214,8 @@ Inject с payload типа date запускает GET-запрос к
 ### Flow 10 — telegram
 
 `telegram receiver` принимает сообщение, function разбирает команды, `telegram sender`
-отправляет ответ. Поле `token` у бота намеренно пустое.
+отправляет ответ. Бот — `@tvl_lab2_kunda_241_bot`, токен хранится только в локальной
+конфигурации Node-RED.
 
 ![Flow 10](../screenshots/15-flow-10-telegram.png)
 
@@ -342,19 +343,21 @@ HTTPS работает (поток 06 получает ответ от API), б�
 Конфигурация потока при этом корректная: ошибок импорта и настройки нет, при запуске
 в сети без ограничений обмен сообщениями заработает без изменений.
 
-### 7.6. Telegram — нужен токен
+### 7.6. Telegram
 
-Поток импортируется и деплоится без ошибок структуры. Пока токен не вставлен, в логе
-ожидаемо появляется:
+Бот создан через `@BotFather`, username — `@tvl_lab2_kunda_241_bot`, токен вставлен
+в ноду `telegram bot` и хранится только в локальной конфигурации Node-RED
+(в репозиторий и в `flows/*.json` он не попадает). После деплоя бот инициализируется
+без ошибок: в логе нет сообщений `Token ... is not set`, метод `getMe` подтверждает
+username, режим — polling (webhook не задан).
 
-```text
-[warn] [telegram bot:tvl_lab2_kunda_bot] Aborting: Token of tvl_lab2_kunda_bot is not set
-[warn] [telegram receiver] bot not initialized.
-[warn] [telegram sender] bot not initialized.
+Проверка команд:
+
 ```
-
-Токен от `@BotFather` я вставляю вручную в ноду `telegram bot` перед запуском,
-в репозиторий он не попадает.
+/start → Привет! Я бот lab2.
+/time  → Текущее время: <дата и время>
+любой текст → Эхо: <текст>
+```
 
 ---
 
