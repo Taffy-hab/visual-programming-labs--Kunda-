@@ -1,0 +1,153 @@
+[
+    {
+        "id": "2accd54598b9e117",
+        "type": "tab",
+        "label": "Lab2-08 endpoints",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "60d3cf2bc7007fa2",
+        "type": "http in",
+        "z": "2accd54598b9e117",
+        "name": "GET /api/text",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "99e25db198875c36"
+            ]
+        ],
+        "url": "/api/text",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": ""
+    },
+    {
+        "id": "99e25db198875c36",
+        "type": "function",
+        "z": "2accd54598b9e117",
+        "name": "plain text",
+        "x": 380,
+        "y": 100,
+        "wires": [
+            [
+                "f3781254a214e875"
+            ]
+        ],
+        "func": "// GET /api/text -> text/plain\nmsg.statusCode = 200;\nmsg.headers = { \"Content-Type\": \"text/plain; charset=utf-8\" };\nmsg.payload = \"простой текст от Node-RED\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": []
+    },
+    {
+        "id": "f3781254a214e875",
+        "type": "http response",
+        "z": "2accd54598b9e117",
+        "name": "response text",
+        "x": 620,
+        "y": 100,
+        "wires": [],
+        "statusCode": "",
+        "headers": {}
+    },
+    {
+        "id": "94043428c4a917bf",
+        "type": "http in",
+        "z": "2accd54598b9e117",
+        "name": "GET /api/info",
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [
+                "8be8bb562311e0e8"
+            ]
+        ],
+        "url": "/api/info",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": ""
+    },
+    {
+        "id": "8be8bb562311e0e8",
+        "type": "function",
+        "z": "2accd54598b9e117",
+        "name": "JSON info",
+        "x": 380,
+        "y": 180,
+        "wires": [
+            [
+                "b1b69879d0515970"
+            ]
+        ],
+        "func": "// GET /api/info -> JSON\nmsg.statusCode = 200;\nmsg.headers = { \"Content-Type\": \"application/json; charset=utf-8\" };\nmsg.payload = { app: \"node-red-lab2\", author: \"kunda\" };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": []
+    },
+    {
+        "id": "b1b69879d0515970",
+        "type": "http response",
+        "z": "2accd54598b9e117",
+        "name": "response info",
+        "x": 620,
+        "y": 180,
+        "wires": [],
+        "statusCode": "",
+        "headers": {}
+    },
+    {
+        "id": "8b48a119618d9163",
+        "type": "http in",
+        "z": "2accd54598b9e117",
+        "name": "GET /api/items/:id",
+        "x": 190,
+        "y": 300,
+        "wires": [
+            [
+                "66fab5c923618028"
+            ]
+        ],
+        "url": "/api/items/:id",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": ""
+    },
+    {
+        "id": "66fab5c923618028",
+        "type": "function",
+        "z": "2accd54598b9e117",
+        "name": "валидация items",
+        "x": 400,
+        "y": 300,
+        "wires": [
+            [
+                "b10d3073b5e455e6"
+            ]
+        ],
+        "func": "// GET /api/items/:id?format=json|text\nconst rawId = msg.req.params.id;\nconst id = Number(rawId);\nconst format = msg.req.query.format || \"json\";\n\n// 1) id должен быть целым положительным числом\nif (!Number.isInteger(id) || id <= 0) {\n    msg.statusCode = 400;\n    msg.headers = { \"Content-Type\": \"application/json; charset=utf-8\" };\n    msg.payload = { error: \"id должен быть положительным числом\" };\n    return msg;\n}\n\n// 2) формат ответа\nif (format !== \"json\" && format !== \"text\") {\n    msg.statusCode = 400;\n    msg.headers = { \"Content-Type\": \"application/json; charset=utf-8\" };\n    msg.payload = { error: \"недопустимый format\" };\n    return msg;\n}\n\n// 3) поиск элемента\nif (id > 100) {\n    msg.statusCode = 404;\n    msg.headers = { \"Content-Type\": \"application/json; charset=utf-8\" };\n    msg.payload = { error: \"item \" + id + \" не найден\" };\n    return msg;\n}\n\n// 4) успешный ответ\nif (format === \"text\") {\n    msg.statusCode = 200;\n    msg.headers = { \"Content-Type\": \"text/plain; charset=utf-8\" };\n    msg.payload = \"item \" + id;\n} else {\n    msg.statusCode = 200;\n    msg.headers = { \"Content-Type\": \"application/json; charset=utf-8\" };\n    msg.payload = { id: id, name: \"item-\" + id, found: true };\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": []
+    },
+    {
+        "id": "b10d3073b5e455e6",
+        "type": "http response",
+        "z": "2accd54598b9e117",
+        "name": "response items",
+        "x": 640,
+        "y": 300,
+        "wires": [],
+        "statusCode": "",
+        "headers": {}
+    }
+]

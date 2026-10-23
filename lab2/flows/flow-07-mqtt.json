@@ -1,0 +1,136 @@
+[
+    {
+        "id": "6bc487a08c8bfd45",
+        "type": "tab",
+        "label": "Lab2-07 mqtt",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c72117377f4d474b",
+        "type": "mqtt-broker",
+        "name": "HiveMQ public",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "71b34ffc3fcc04fd",
+        "type": "inject",
+        "z": "6bc487a08c8bfd45",
+        "name": "каждые 5 с",
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "b5e022232bdc6c70"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date"
+    },
+    {
+        "id": "b5e022232bdc6c70",
+        "type": "function",
+        "z": "6bc487a08c8bfd45",
+        "name": "случайная температура",
+        "x": 410,
+        "y": 120,
+        "wires": [
+            [
+                "112fdea2c62dec03"
+            ]
+        ],
+        "func": "// Лабораторная №2, flow-07: имитация датчика температуры\nmsg.payload = Math.round(Math.random() * 100);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": []
+    },
+    {
+        "id": "112fdea2c62dec03",
+        "type": "mqtt out",
+        "z": "6bc487a08c8bfd45",
+        "name": "publish temp",
+        "x": 660,
+        "y": 120,
+        "wires": [],
+        "topic": "student/kunda/lab2/temp",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "c72117377f4d474b"
+    },
+    {
+        "id": "275f90b65b97e24c",
+        "type": "mqtt in",
+        "z": "6bc487a08c8bfd45",
+        "name": "subscribe temp",
+        "x": 380,
+        "y": 220,
+        "wires": [
+            [
+                "e854a005dd901f80"
+            ]
+        ],
+        "topic": "student/kunda/lab2/temp",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "c72117377f4d474b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 1
+    },
+    {
+        "id": "e854a005dd901f80",
+        "type": "debug",
+        "z": "6bc487a08c8bfd45",
+        "name": "принято из HiveMQ",
+        "x": 650,
+        "y": 220,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto"
+    }
+]

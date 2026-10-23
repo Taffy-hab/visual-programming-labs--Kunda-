@@ -1,0 +1,75 @@
+[
+    {
+        "id": "7101a90a72677e7a",
+        "type": "tab",
+        "label": "Lab2-06 http request",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b4762b801dd0605e",
+        "type": "inject",
+        "z": "7101a90a72677e7a",
+        "name": "запуск (date)",
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "8fda6122aa8bb0df"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date"
+    },
+    {
+        "id": "8fda6122aa8bb0df",
+        "type": "http request",
+        "z": "7101a90a72677e7a",
+        "name": "random joke",
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "ee4dd55000c67bbe"
+            ]
+        ],
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://official-joke-api.appspot.com/random_joke",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": []
+    },
+    {
+        "id": "ee4dd55000c67bbe",
+        "type": "debug",
+        "z": "7101a90a72677e7a",
+        "name": "msg.payload",
+        "x": 620,
+        "y": 120,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto"
+    }
+]
