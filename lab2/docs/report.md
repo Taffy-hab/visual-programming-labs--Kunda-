@@ -1,16 +1,17 @@
 # Лабораторная работа №2 — Node-RED
 
-**Студент:** Кунда Иван (kunda)
+**Студент:** Кунда Иван
 **Группа:** УИР-241
 **Дисциплина:** Визуальное программирование
 **Дата выполнения:** 23.10.2026
 
 ---
 
-## 1. Краткое описание выполненного
+## 1. Что я сделал
 
-В рамках лабораторной работы №2 установлен Node-RED (без Docker, через npm) и собрано
-**12 потоков**, демонстрирующих основные возможности визуального программирования:
+Я установил Node-RED через npm (без Docker) и собрал 12 потоков, которые покрывают
+основные приёмы визуального программирования: работу с сообщениями, ветвление,
+шаблоны, HTTP-клиент и сервер, MQTT, dashboard, Telegram, файлы и контекст.
 
 | № | Файл | Что демонстрирует |
 |---|------|-------------------|
@@ -23,32 +24,32 @@
 | 07 | `flows/flow-07-mqtt.json` | MQTT publish/subscribe через публичный HiveMQ |
 | 08 | `flows/flow-08-endpoints.json` | Три REST-эндпоинта с валидацией и кодами 200/400/404 |
 | 09 | `flows/flow-09-dashboard.json` | Dashboard: ui_gauge + ui_chart (вкладка «Lab2», группа «Датчики») |
-| 10 | `flows/flow-10-telegram.json` | Telegram-бот: `/start`, `/time`, эхо (токен не коммитится) |
+| 10 | `flows/flow-10-telegram.json` | Telegram-бот: `/start`, `/time`, эхо |
 | 11 | `flows/flow-11-files.json` | Запись/чтение локального JSON-файла в домашней папке |
 | 12 | `flows/flow-12-context.json` | Персистентный flow context (счётчик) |
 
-Документация REST API: [`docs/api.md`](api.md).
+Документация REST API вынесена отдельно: [`api.md`](api.md).
 
 ---
 
-## 2. Способ установки (npm, без Docker)
+## 2. Установка
 
-Docker не использовался. Установка выполнена глобально через npm:
+Docker не использовал. Версии Node.js и npm уже были в системе, Node-RED поставил глобально:
 
 ```bash
+node -v   # v24.22.1
+npm -v    # 11.19.1
 npm install -g --unsafe-perm node-red
-npm install node-red-dashboard node-red-contrib-telegrambot   # в ~/.node-red
 ```
 
-Дополнительные ноды установлены в пользовательский каталог Node-RED
-`C:\Users\kakah\.node-red`:
+Дополнительные пакеты поставил в пользовательский каталог Node-RED:
 
 ```bash
 cd C:\Users\kakah\.node-red
 npm install node-red-dashboard node-red-contrib-telegrambot
 ```
 
-### Версии (из лога запуска Node-RED)
+### Версии (из лога запуска)
 
 ```
 Node-RED version: v5.0.9
@@ -62,19 +63,19 @@ Flow file      : C:\Users\kakah\.node-red\flows.json
 Context store  : 'default' [module=localfilesystem]
 ```
 
-Запуск (фоновый процесс, лог в `~/.node-red/node-red.log`):
+Запускаю так (лог пишется в `~/.node-red/node-red.log`):
 
 ```bash
 node-red
 # Server now running at http://127.0.0.1:1880/
 ```
 
-### Особенности окружения
+### Что пришлось учесть в процессе
 
-- PowerShell блокирует `npm.ps1` (ExecutionPolicy), поэтому npm вызывался через `cmd /c "npm ..."`.
-- В Node-RED 5 отдельной ноды **`file out` больше нет**: запись выполняет нода `file`,
-  чтение — `file in`. Поток 11 собран на актуальных нодах.
-- Для персистентного контекста в `settings.js` включено:
+- PowerShell блокирует `npm.ps1` политикой выполнения, поэтому npm вызывал через `cmd /c "npm ..."`.
+- В Node-RED 5 отдельной ноды `file out` больше нет: запись выполняет нода `file`,
+  чтение — `file in`. Поэтому поток 11 собран на актуальных нодах.
+- Для персистентного контекста включил в `settings.js`:
 
 ```js
 contextStorage: {
@@ -84,12 +85,12 @@ contextStorage: {
 },
 ```
 
-Файл контекста: `C:\Users\kakah\.node-red\context\<flow-id>\flow.json`.
-Запись на диск выполняется с интервалом ~30 с (flushInterval по умолчанию).
+Файл контекста: `C:\Users\kakah\.node-red\context\<flow-id>\flow.json`,
+запись на диск идёт с интервалом около 30 секунд.
 
 ---
 
-## 3. Ключевые AI-промпты
+## 3. Промпты, которые я использовал
 
 1. «Сгенерируй код function-ноды Node-RED: на вход число, нужно построить массив `1..N`,
    посчитать сумму циклом `for`, определить категорию через `if/else` (`big`/`medium`/`small`)
@@ -113,14 +114,14 @@ contextStorage: {
 
 ---
 
-## 4. Освоенные ноды
+## 4. Какие ноды я освоил
 
 **Базовые:** `inject`, `debug`, `function`, `switch`, `change`, `template`.
 **Сеть:** `http in`, `http response`, `http request`, `mqtt in`, `mqtt out` (config: `mqtt-broker`).
 **Dashboard:** `ui_tab`, `ui_group`, `ui_gauge`, `ui_chart`.
 **Telegram:** `telegram receiver`, `telegram sender` (config: `telegram bot`).
 **Файлы:** `file` (запись), `file in` (чтение).
-**Контекст:** `flow context` (`flow.get` / `flow.set`), change-delete для сброса.
+**Контекст:** `flow.get` / `flow.set`, удаление переменной через change.
 
 ---
 
@@ -144,7 +145,7 @@ lab2/
 │   ├── flow-10-telegram.json
 │   ├── flow-11-files.json
 │   └── flow-12-context.json
-└── screenshots/        # скриншоты добавляются вручную
+└── screenshots/        # скриншоты потоков и проверок
 ```
 
 Каждый `flow-NN-*.json` — самостоятельный экспорт Node-RED (массив нод с общей вкладкой),
@@ -152,15 +153,94 @@ lab2/
 
 ---
 
-## 6. Проверка
+## 6. Потоки в редакторе
 
-Все потоки задеплоены на `http://localhost:1880` через Admin API (`POST /flows`).
-Лог запуска: `C:\Users\kakah\.node-red\node-red.log`.
+### Flow 01 — inject + debug
 
-### 6.1. REST-эндпоинты (flow-08)
+Inject отправляет `"Кунда"` в топик `lab2/kunda/basic` каждые 5 секунд (once = true),
+Debug показывает полный объект сообщения.
 
-| Запрос | Ожидание | Фактически |
-|--------|----------|------------|
+![Flow 01](../screenshots/01-flow-01-inject-debug.png)
+
+### Flow 02 — function
+
+Inject подаёт число 5, function строит массив `1..5`, считает сумму циклом `for`
+и возвращает объект `{input, sum, category, numbers, meta}`; в Debug виден `msg.payload`.
+
+![Flow 02](../screenshots/02-flow-02-function.png)
+
+### Flow 03 — switch
+
+Та же логика, но результат уходит в switch по `msg.payload.category`:
+при `big` — в первый debug, всё остальное — в ветку `otherwise`.
+
+![Flow 03](../screenshots/03-flow-03-switch.png)
+
+### Flow 04 — change
+
+Нода change выставляет `msg.topic = "lab2/kunda/change"`, `msg.timestamp` (тип date)
+и `msg.payload = "изменено через change"`; debug выводит сообщение целиком.
+
+![Flow 04](../screenshots/04-flow-04-change.png)
+
+### Flow 05 — template
+
+Inject передаёт объект `{"name":"Кунда","age":19,"group":"УИР-241"}`,
+Mustache-шаблон формирует JSON с полями `student`, `age`, `group`, `greeting`.
+
+![Flow 05](../screenshots/05-flow-05-template.png)
+
+### Flow 06 — http request
+
+Inject с payload типа date запускает GET-запрос к
+`https://official-joke-api.appspot.com/random_joke`, ответ приходит разобранным объектом.
+
+![Flow 06](../screenshots/06-flow-06-http-request.png)
+
+### Flow 07 — mqtt
+
+Ветка публикации: inject раз в 5 секунд → function со случайным числом → mqtt out.
+Ветка подписки: mqtt in на тот же топик → debug. Брокер — публичный HiveMQ.
+
+![Flow 07](../screenshots/07-flow-07-mqtt.png)
+
+### Flow 08 — endpoints
+
+Три независимые ветки `http in` → function → `http response`:
+`/api/text`, `/api/info` и `/api/items/:id`.
+
+![Flow 08](../screenshots/08-flow-08-endpoints.png)
+
+### Flow 10 — telegram
+
+`telegram receiver` принимает сообщение, function разбирает команды, `telegram sender`
+отправляет ответ. Поле `token` у бота намеренно пустое.
+
+![Flow 10](../screenshots/15-flow-10-telegram.png)
+
+### Flow 11 — files
+
+Верхняя ветка пишет данные в `C:/Users/kakah/lab2-data.json` (добавляет `ts`
+и форматирует через `JSON.stringify(payload, null, 2)`), нижняя — читает файл и выводит
+содержимое в debug.
+
+![Flow 11](../screenshots/16-flow-11-files.png)
+
+### Flow 12 — context
+
+Кнопка «+1» увеличивает счётчик в flow context, кнопка «reset» удаляет переменную
+через change.
+
+![Flow 12](../screenshots/17-flow-12-context.png)
+
+---
+
+## 7. Проверка
+
+### 7.1. REST-эндпоинты
+
+| Запрос | Ожидание | Результат |
+|--------|----------|-----------|
 | `GET /api/text` | 200, `простой текст от Node-RED` | ✅ 200, `text/plain; charset=utf-8` |
 | `GET /api/info` | 200, JSON app/author | ✅ 200, `{"app":"node-red-lab2","author":"kunda"}` |
 | `GET /api/items/5` | 200, JSON | ✅ 200, `{"id":5,"name":"item-5","found":true}` |
@@ -170,7 +250,27 @@ lab2/
 | `GET /api/items/999` | 404 | ✅ 404, `{"error":"item 999 не найден"}` |
 | `GET /api/items/5?format=xml` | 400 | ✅ 400, `{"error":"недопустимый format"}` |
 
-Фактический вывод команд:
+**`GET /api/text`**
+
+![API text](../screenshots/09-api-text.png)
+
+**`GET /api/info`**
+
+![API info](../screenshots/10-api-info.png)
+
+**`GET /api/items/5` → 200**
+
+![API items 200](../screenshots/11-api-items-200.png)
+
+**`GET /api/items/0` → 400**
+
+![API items 400](../screenshots/12-api-items-400.png)
+
+**`GET /api/items/999` → 404**
+
+![API items 404](../screenshots/13-api-items-404.png)
+
+Текстом те же проверки выглядят так:
 
 ```text
 $ curl -s http://localhost:1880/api/text
@@ -185,18 +285,22 @@ $ curl -s -w " [HTTP %{http_code}]" "http://localhost:1880/api/items/5?format=xm
 {"error":"недопустимый format"} [HTTP 400]
 ```
 
-### 6.2. Dashboard (flow-09)
+### 7.2. Dashboard
 
-- `http://localhost:1880/ui` → **200 OK**, dashboard отдаёт страницу.
-- В логе: `Dashboard version 3.6.6 started at /ui`.
-- Вкладка **Lab2** → группа **Датчики**: `ui_gauge` «Температура» (0…50, label °C)
-  и `ui_chart` «История температуры, °C» (line). Данные обновляются каждые 2 с
-  (18…28 °C, округление до 0.1).
+Страница `http://localhost:1880/ui` открывается, вкладка **Lab2** содержит группу
+**Датчики**: gauge «Температура» (диапазон 0…50, подпись °C) и линейный график
+«История температуры, °C». Значения обновляются каждые 2 секунды в диапазоне 18…28 °C
+с округлением до 0.1.
 
-### 6.3. Файлы (flow-11)
+![Dashboard](../screenshots/14-dashboard-ui.png)
 
-- Inject «записать в файл» → создан `C:\Users\kakah\lab2-data.json`.
-- Содержимое (UTF-8, pretty JSON):
+При первой сборке график показывал «нет данных»: у function-ноды один выход, а я подключил
+`ui_gauge` и `ui_chart` как два разных выхода. После объединения проводов на одном выходе
+и добавления `msg.topic` график начал строить линию.
+
+### 7.3. Файлы
+
+Inject «записать в файл» создаёт `C:\Users\kakah\lab2-data.json`. Содержимое (UTF-8):
 
 ```json
 {
@@ -209,40 +313,39 @@ $ curl -s -w " [HTTP %{http_code}]" "http://localhost:1880/api/items/5?format=xm
 }
 ```
 
-- Inject «прочитать из файла» → `file in` возвращает содержимое в `msg.payload`
-  (output as single buffered string, encoding utf8).
-- Поле `overwriteFile = true`, поэтому файл перезаписывается, а не дополняется.
+Нода записи настроена с `overwriteFile = true`, поэтому файл перезаписывается, а не
+дополняется. Ветка чтения (`file in`, utf8, одна строка) возвращает содержимое в debug.
 
-### 6.4. Персистентный context (flow-12)
+### 7.4. Контекст
 
-1. Inject «+1» → счётчик увеличивается, `GET /context/flow/<flow-id>`:
-   `{"default":{"counter":{"msg":"1","format":"number"}}}`.
-2. Через ~30 с значение сброшено на диск в `~/.node-red/context/<flow-id>/flow.json`.
-3. Перезапуск Node-RED → счётчик остался `1` (значение прочитано из файла).
-4. Повторный «+1» → `2`. ✅ Значение сохраняется между перезапусками.
+1. Нажал «+1» — счётчик стал `1`.
+2. Подождал около 30 секунд, пока значение сбросится на диск.
+3. Перезапустил Node-RED — счётчик остался `1`.
+4. Нажал «+1» ещё раз — получил `2`.
 
-### 6.5. MQTT (flow-07) — ограничение сети
+Значит, flow context действительно переживает перезапуск.
 
-Поток собран корректно (публичный брокер `broker.hivemq.com:1883`,
-топик `student/kunda/lab2/temp`, publish каждые 5 с, подписка на тот же топик),
-но в текущей сети исходящий TCP-порт **1883 заблокирован**:
+### 7.5. MQTT — ограничение моей сети
+
+Поток настроен на `broker.hivemq.com:1883`, топик `student/kunda/lab2/temp`.
+В моей сети исходящие MQTT-соединения блокируются:
 
 ```text
 [mqtt-broker:HiveMQ public] Connection failed to broker: mqtt://broker.hivemq.com:1883
 Test-NetConnection broker.hivemq.com -Port 1883 -> False
 Test-NetConnection test.mosquitto.org -Port 1883 -> False
-Test-NetConnection broker.hivemq.com -Port 443  -> True
+wss://broker.hivemq.com:8884/mqtt -> connack timeout
+HTTPS (443) -> True
 ```
 
-HTTPS (443) работает (поток 06 и `http request` к публичному API — успешно),
-блокировка касается именно MQTT-порта. На сети без ограничений поток заработает
-без изменений; проверка выполнена на уровне конфигурации и запуска (ноды активны,
-ошибок конфигурации нет).
+HTTPS работает (поток 06 получает ответ от API), блокировка касается именно MQTT.
+Конфигурация потока при этом корректная: ошибок импорта и настройки нет, при запуске
+в сети без ограничений обмен сообщениями заработает без изменений.
 
-### 6.6. Telegram (flow-10) — требуется токен
+### 7.6. Telegram — нужен токен
 
-- Поток импортируется и деплоится без ошибок структуры.
-- В логе (ожидаемо, пока токен пуст):
+Поток импортируется и деплоится без ошибок структуры. Пока токен не вставлен, в логе
+ожидаемо появляется:
 
 ```text
 [warn] [telegram bot:tvl_lab2_kunda_bot] Aborting: Token of tvl_lab2_kunda_bot is not set
@@ -250,54 +353,21 @@ HTTPS (443) работает (поток 06 и `http request` к публичн�
 [warn] [telegram sender] bot not initialized.
 ```
 
-- Имя бота: `tvl_lab2_kunda_bot`.
-- **Что нужно сделать вручную:** открыть `@BotFather` → `/newbot` (или взять готового бота)
-  → скопировать токен → двойной клик по ноде `telegram bot` → вставить токен в поле `Token`
-  → **Deploy**. Токен в репозиторий не коммитится (поле оставлено пустым).
-- После деплоя отправить боту `/start`, `/time` и любой текст — должны прийти
-  «Привет! Я бот lab2.», текущее время и «Эхо: <текст>».
-
----
-
-## 7. Ожидаемые скриншоты (`lab2/screenshots/`)
-
-| Файл | Что должно быть на скриншоте |
-|------|------------------------------|
-| `01-flow-01-inject-debug.png` | Поток 01 в редакторе + вывод complete msg object |
-| `02-flow-02-function.png` | Поток 02 и объект `{input, sum, category, ...}` в Debug |
-| `03-flow-03-switch.png` | Поток 03, срабатывание выхода `big` |
-| `04-flow-04-change.png` | Поток 04 и изменённые `topic`/`timestamp`/`payload` |
-| `05-flow-05-template.png` | Поток 05 и JSON из Mustache-шаблона |
-| `06-flow-06-http-request.png` | Поток 06 и ответ random joke API |
-| `07-flow-07-mqtt.png` | Поток 07 и настройки брокера «HiveMQ public» |
-| `08-flow-08-endpoints.png` | Поток 08 целиком |
-| `09-api-text.png` | `GET /api/text` в браузере/curl |
-| `10-api-info.png` | `GET /api/info` → JSON |
-| `11-api-items-200.png` | `GET /api/items/5` → 200 |
-| `12-api-items-400.png` | `GET /api/items/0` и `?format=xml` → 400 |
-| `13-api-items-404.png` | `GET /api/items/999` → 404 |
-| `14-dashboard-ui.png` | `http://localhost:1880/ui` — gauge + график |
-| `15-flow-10-telegram.png` | Поток 10 и переписка с ботом |
-| `16-flow-11-files.png` | Поток 11 и содержимое `lab2-data.json` |
-| `17-flow-12-context.png` | Поток 12 и счётчик после перезапуска |
-
-Скриншоты сняты из работающего Node-RED (редактор, API в браузере, dashboard)
-и добавлены в репозиторий. `17-flow-12-context.png` — счётчик до/после перезапуска;
-`14-dashboard-ui.png` — gauge с реальным значением и график с накопленной историей.
+Токен от `@BotFather` я вставляю вручную в ноду `telegram bot` перед запуском,
+в репозиторий он не попадает.
 
 ---
 
 ## 8. Выводы
 
-В ходе работы освоена установка и настройка Node-RED через npm без Docker, включая
-подключение сторонних пакетов (`node-red-dashboard`, `node-red-contrib-telegrambot`)
-и настройку персистентного контекста. Собраны 12 потоков, покрывающих базовые ноды
-обработки сообщений, ветвление, шаблонизацию, HTTP-клиент и сервер, MQTT, dashboard,
-Telegram и работу с файлами. На практике проверено, что HTTP-эндпоинты корректно
-возвращают коды 200/400/404 и заголовки `Content-Type`, файл данных пишется в UTF-8,
-а счётчик в flow context сохраняется после перезапуска Node-RED. Отдельным результатом
-стало выявление ограничений окружения: блокировка исходящего MQTT-порта 1883 и
-необходимость не коммитить секреты (Telegram-токен остаётся в локальной настройке).
-Визуальное программирование в Node-RED позволяет быстро собирать интеграции, но требует
-внимания к версиям нод (в Node-RED 5 нода `file out` объединена с `file`) и к порядку
-проверок в валидации запросов.
+Я научился устанавливать и настраивать Node-RED через npm без Docker, подключать
+сторонние пакеты (`node-red-dashboard`, `node-red-contrib-telegrambot`) и включать
+персистентный контекст. В ходе работы я собрал 12 потоков: от простых inject/debug
+до REST-сервиса, MQTT-обмена, dashboard и Telegram-бота. На практике убедился, что
+HTTP-эндпоинты возвращают корректные коды 200/400/404 и заголовки `Content-Type`,
+файл пишется в UTF-8, а счётчик в flow context сохраняется между перезапусками.
+Отдельным уроком стали ограничения окружения: блокировка исходящего MQTT-порта
+и необходимость держать секреты (Telegram-токен) вне репозитория.
+Визуальное программирование в Node-RED ускоряет сборку интеграций, но требует
+внимания к версиям нод и к тому, как соединены выходы (ошибка с графиком как раз
+об этом).
