@@ -1,0 +1,92 @@
+[
+    {
+        "id": "97601a7fd7c8df15",
+        "type": "tab",
+        "label": "Lab2-04 change",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "0f93921d94830e1f",
+        "type": "inject",
+        "z": "97601a7fd7c8df15",
+        "name": "запуск",
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "516c9da25b09a2fd"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date"
+    },
+    {
+        "id": "516c9da25b09a2fd",
+        "type": "change",
+        "z": "97601a7fd7c8df15",
+        "name": "topic / timestamp / payload",
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "2a0276bd0b143d45"
+            ]
+        ],
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "lab2/kunda/change",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "изменено через change",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false
+    },
+    {
+        "id": "2a0276bd0b143d45",
+        "type": "debug",
+        "z": "97601a7fd7c8df15",
+        "name": "complete msg",
+        "x": 650,
+        "y": 120,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto"
+    }
+]

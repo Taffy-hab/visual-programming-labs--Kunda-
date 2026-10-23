@@ -1,0 +1,116 @@
+[
+    {
+        "id": "2e6ff07d1d1b6b03",
+        "type": "tab",
+        "label": "Lab2-03 switch",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7722a8deed3fe593",
+        "type": "inject",
+        "z": "2e6ff07d1d1b6b03",
+        "name": "число 5",
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "f1f5d2e063dfe057"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "5",
+        "payloadType": "num"
+    },
+    {
+        "id": "f1f5d2e063dfe057",
+        "type": "function",
+        "z": "2e6ff07d1d1b6b03",
+        "name": "категория",
+        "x": 350,
+        "y": 140,
+        "wires": [
+            [
+                "84ca569f6f7009b9"
+            ]
+        ],
+        "func": "// Лабораторная №2, flow-03: упрощённая версия логики flow-02\nconst input = msg.payload;\nlet sum = 0;\nconst numbers = [];\n\nfor (let i = 1; i <= input; i++) {\n    numbers.push(i);\n    sum += i;\n}\n\nconst category = sum > 10 ? \"big\" : \"small\";\n\nmsg.payload = {\n    input: input,\n    sum: sum,\n    category: category,\n    numbers: numbers,\n    meta: { author: \"kunda\", group: \"УИР-241\" }\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": []
+    },
+    {
+        "id": "84ca569f6f7009b9",
+        "type": "switch",
+        "z": "2e6ff07d1d1b6b03",
+        "name": "category == big ?",
+        "x": 560,
+        "y": 140,
+        "wires": [
+            [
+                "62edf191d9249f0b"
+            ],
+            [
+                "34eaf18e1e985d5d"
+            ]
+        ],
+        "property": "payload.category",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "big",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2
+    },
+    {
+        "id": "62edf191d9249f0b",
+        "type": "debug",
+        "z": "2e6ff07d1d1b6b03",
+        "name": "big",
+        "x": 810,
+        "y": 100,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto"
+    },
+    {
+        "id": "34eaf18e1e985d5d",
+        "type": "debug",
+        "z": "2e6ff07d1d1b6b03",
+        "name": "otherwise",
+        "x": 810,
+        "y": 180,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto"
+    }
+]

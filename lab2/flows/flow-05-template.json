@@ -1,0 +1,70 @@
+[
+    {
+        "id": "9f7d8a38617d6d0e",
+        "type": "tab",
+        "label": "Lab2-05 template",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "867a207bf779f047",
+        "type": "inject",
+        "z": "9f7d8a38617d6d0e",
+        "name": "студент (JSON)",
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "dde1df39965a4c56"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"name\":\"Кунда\",\"age\":19,\"group\":\"УИР-241\"}",
+        "payloadType": "json"
+    },
+    {
+        "id": "dde1df39965a4c56",
+        "type": "template",
+        "z": "9f7d8a38617d6d0e",
+        "name": "Mustache -> JSON",
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "33ea76f276bd3de3"
+            ]
+        ],
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n    \"student\": \"{{payload.name}}\",\n    \"age\": {{payload.age}},\n    \"group\": \"{{payload.group}}\",\n    \"greeting\": \"Привет, {{payload.name}}! Ты студент группы {{payload.group}}.\"\n}",
+        "output": "str"
+    },
+    {
+        "id": "33ea76f276bd3de3",
+        "type": "debug",
+        "z": "9f7d8a38617d6d0e",
+        "name": "msg.payload",
+        "x": 640,
+        "y": 120,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto"
+    }
+]

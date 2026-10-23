@@ -1,0 +1,71 @@
+[
+    {
+        "id": "d451a548bdd4dea3",
+        "type": "tab",
+        "label": "Lab2-02 function",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "0a8beb65aec36043",
+        "type": "inject",
+        "z": "d451a548bdd4dea3",
+        "name": "число 5",
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "59961cc356be4674"
+            ]
+        ],
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "5",
+        "payloadType": "num"
+    },
+    {
+        "id": "59961cc356be4674",
+        "type": "function",
+        "z": "d451a548bdd4dea3",
+        "name": "сумма и категория",
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "828fbb408aeb08e5"
+            ]
+        ],
+        "func": "// Лабораторная №2, flow-02: let/const, if/else, for, массив, объект\nconst input = msg.payload;\nconst numbers = [];\nlet sum = 0;\n\nfor (let i = 1; i <= input; i++) {\n    numbers.push(i);\n    sum += i;\n}\n\nlet category;\nif (sum > 10) {\n    category = \"big\";\n} else if (sum > 5) {\n    category = \"medium\";\n} else {\n    category = \"small\";\n}\n\nconst meta = {\n    author: \"kunda\",\n    student: \"Кунда\",\n    group: \"УИР-241\",\n    lab: 2,\n    evenInput: input % 2 === 0\n};\n\nmsg.payload = { input: input, sum: sum, category: category, numbers: numbers, meta: meta };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": []
+    },
+    {
+        "id": "828fbb408aeb08e5",
+        "type": "debug",
+        "z": "d451a548bdd4dea3",
+        "name": "msg.payload",
+        "x": 640,
+        "y": 120,
+        "wires": [],
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto"
+    }
+]
