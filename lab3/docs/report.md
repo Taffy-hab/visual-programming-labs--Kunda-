@@ -430,3 +430,169 @@ Repeating Group сам запрашивает данные по `Data source`, �
 *`10-workflow-delete.png` — заглушка: workflow `wf_delete_habit` с подтверждением и Delete a thing.*
 
 ---
+
+## 6. Часть 5. Ачивки
+
+Ачивки **не выполнялись**: по заданию они опциональны, а часть 5 разрешает
+сосредоточиться на основных этапах 1–4 и отчёте.
+
+- API Connector не подключался, файл `lab3/docs/api.md` не создавался.
+- Плагины не устанавливались, скриншоты `11-api-*.png` и `12-plugin-*.png` отсутствуют.
+
+---
+
+## 7. Часть 6. Итоговый отчёт
+
+### 7.1. Краткое описание выполненного
+
+Спроектировано приложение **HabitFlow** — трекер привычек с регистрацией, структурой
+header + body + footer, строкой «ТВП: Кунда» и полным CRUD. Подготовлены промпт для
+AI-агента, каркас из четырёх страниц, ручная доработка UI (заголовок, три Global
+variable, стили, готовый компонент Signup Form), две сущности Data (`Habit`,
+`HabitLog`), тестовые записи и workflows для создания, чтения, редактирования,
+отметки выполнения и удаления. Оформлен отчёт и набор скриншотов-заглушек.
+
+### 7.2. Ссылка на dev-версию
+
+**Статус:** `TODO — добавить после Deploy`.
+
+```
+https://<app-name>.bubbleapps.io
+```
+
+В среде выполнения не было авторизованного аккаунта Bubble, поэтому приложение не
+опубликовано и рабочая ссылка не выдаётся за существующую. После входа в Bubble нужно
+нажать **Deploy → Deploy to Live** (или использовать Preview-ссылку) и вписать адрес
+в эту строку.
+
+### 7.3. Использованные AI-промпты
+
+| № | Назначение | Где в отчёте | Промпт |
+|---|---|---|---|
+| 1 | Генерация каркаса HabitFlow | раздел 2.1 | тема, регистрация, header + body + footer, «ТВП: Кунда», 5 CRUD-сценариев, фиолетово-зелёная гамма |
+| 2 | Структура новой сущности | раздел 5.1 | `Habit` + `HabitLog`, типы полей, обязательность, значения по умолчанию, 3 записи |
+
+Оба промпта приведены в отчёте **дословно** в блоках `text`. Других AI-промптов
+для генерации приложения не использовалось; исследование Build Guides выполнялось
+вручную по публичным материалам Bubble.
+
+### 7.4. Освоенные элементы и workflows
+
+| Группа | Элементы и приёмы |
+|---|---|
+| Design | header, footer, Text, Button, Icon, Image, Input, Multiline Input, Dropdown, Date Picker, Group, Repeating Group, Popup, Alert, Progress Bar |
+| Композиция | reusable header/footer, готовый компонент **Signup Form**, адаптивная вёрстка |
+| Стили | Global variables (`primary-color`, `accent-color`, `surface-color`), стили `Button / Primary`, `Text / H1`, `Card / Habit`, `Input / Default` |
+| Data | Data Type, поля text / number / date / yes-no / User / Habit, Option Set `HabitCategory`, App Data, Privacy Rules |
+| Workflows | Create a new thing, Make changes to a thing, Delete a thing, Delete a list of things, Reset relevant inputs, Show/Hide element, Go to page, Display data, Sign the user up, Log the user in, Log the user out |
+| Логика | условия `Current User is empty`, `owner = Current User`, счётчики через `Search for ... :count`, серия через `streak + 1` |
+
+| Workflow | Триггер | Суть |
+|---|---|---|
+| `wf_create_habit` | SaveHabit → clicked | Create `Habit` → Reset inputs → Hide popup → Alert |
+| `RG_Habits` + `wf_page_loaded` | page load / data source | Search `Habit` по `owner = Current User`; редирект гостя на `login` |
+| `wf_update_habit` | Edit → clicked, SaveHabit → clicked | Display data → Make changes to `Popup_HabitForm's Habit` |
+| `wf_toggle_complete` | чекбокс → clicked | Create/Delete `HabitLog` + обновление `streak` и `last_completed` |
+| `wf_delete_habit` | Delete → ConfirmDelete | Delete `HabitLog` → Delete `Habit` → Hide → Alert |
+| `wf_signup` / `wf_login` / `wf_logout` | кнопки форм | Sign up / Log in / Log out + Go to page |
+
+### 7.5. Что сгенерировал AI и что доработано вручную
+
+| Этап | AI | Вручную |
+|---|---|---|
+| Страницы | 4 страницы, базовая навигация, header/body/footer | заголовок с именем, footer «ТВП: Кунда», пустые состояния |
+| UI | список, кнопки, простая форма | Repeating Group, карточки, статистика, фильтр, popup, прогресс-бар |
+| Стили | стартовая палитра | Global variables, `Button / Primary`, `Text / H1`, `Card / Habit`, `Input / Default` |
+| Компоненты | базовая страница регистрации | готовый Signup Form из COMPONENTS и его настройка |
+| Data | черновой набор полей | `Habit` + `HabitLog`, типы, обязательность, Option Set, 3 записи, Privacy Rules |
+| Workflows | заготовки кнопок | 5 CRUD-workflow, проверка авторизации, удаление связанных логов, alert-сообщения |
+| Адаптивность | базовая | одна колонка на mobile, отступы 16 px, размеры шрифтов |
+
+### 7.6. Выводы
+
+1. **AI ускоряет старт, но не заменяет проектирование.** Готовый каркас появился быстро,
+   однако без точного промпта AI легко теряет footer, строку «ТВП» или делает список
+   вместо полноценного CRUD. Чем конкретнее сценарии в промпте, тем меньше ручной правки.
+2. **Порядок «Data → UI → Workflows» экономит время.** Когда сначала описаны `Habit`
+   и `HabitLog`, Repeating Group и формы собираются предсказуемо. Попытка начать с UI
+   приводит к переделке полей и связей.
+3. **Bubble разделяет чтение и изменение.** Read — это `Data source` Repeating Group,
+   а Create/Update/Delete — отдельные workflow-события. Понимание этого разделения
+   ключевое для защиты.
+4. **Global variables и стили дают единый дизайн.** Одна переменная `primary-color`
+   меняет кнопки, активные вкладки и прогресс; стили убирают ручную настройку каждого
+   элемента. Готовый компонент Signup Form сокращает сборку страницы регистрации.
+5. **Приватность и пустые состояния — часть продукта.** Правило `owner = Current User`
+   не даёт видеть чужие привычки, а пустое состояние и подтверждение удаления делают
+   приложение понятным и безопасным.
+6. **Ограничение работы:** Build Guides и редактор Bubble требуют аккаунта. В отчёте
+   использованы публичные гайды Bubble, а снимки редактора заменены заглушками; перед
+   защитой их нужно заменить реальными скриншотами и добавить dev-ссылку.
+
+### 7.7. Что проверить перед защитой
+
+- [ ] Заменить `01-prompt.png`, `03-global-variable.png`, `04-style.png`, `05-component.png`,
+      `06-data-type.png`, `07-data-records.png`, `08-workflow-create.png`,
+      `09-workflow-create.png`, `10-workflow-delete.png` реальными снимками Bubble.
+- [ ] Оставить `02-buildguide-*.png` — это настоящие скриншоты публичных гайдов.
+- [ ] Сделать Deploy и вписать dev-ссылку в раздел 7.2.
+- [ ] Пройти CRUD в Preview: создать, открыть, изменить, отметить, удалить привычку.
+- [ ] Показать строку «ТВП: Кунда» в footer и имя в заголовке.
+- [ ] Показать `git log` — не менее 4 осмысленных коммитов.
+- [ ] Объяснить: что сделал AI, что вручную; как устроены `Habit`/`HabitLog`;
+      как работают Create/Read/Update/Delete; где применяются Global variables и стили.
+
+### 7.8. Состав репозитория и скриншоты
+
+```text
+visual-programming-labs--Kunda-/
+├── README.md
+└── lab3/
+    ├── docs/
+    │   └── report.md
+    └── screenshots/
+        ├── 01-prompt.png
+        ├── 02-buildguide-todo.png
+        ├── 02-buildguide-first-app.png
+        ├── 02-before.png
+        ├── 02-after.png
+        ├── 03-global-variable.png
+        ├── 04-style.png
+        ├── 05-component.png
+        ├── 06-data-type.png
+        ├── 07-data-records.png
+        ├── 08-workflow-create.png
+        ├── 09-workflow-create.png
+        └── 10-workflow-delete.png
+```
+
+| Скриншот | Что показывает | Статус |
+|---|---|---|
+| `01-prompt.png` | промпт в AI-агенте Bubble | заглушка |
+| `02-buildguide-todo.png` | публичный гайд Bubble по to-do | реальный снимок |
+| `02-buildguide-first-app.png` | публичный гайд Getting Started | реальный снимок |
+| `02-before.png` | каркас до исследования | макет |
+| `02-after.png` | каркас после применения идеи | макет |
+| `03-global-variable.png` | `primary-color` в Global → Variables | заглушка |
+| `04-style.png` | стиль `Button / Primary` | заглушка |
+| `05-component.png` | Signup Form из COMPONENTS | заглушка |
+| `06-data-type.png` | `Habit` и `HabitLog` | заглушка |
+| `07-data-records.png` | 3 записи в App Data | заглушка |
+| `08-workflow-create.png` | результат Create в Preview | заглушка |
+| `09-workflow-create.png` | workflow создания | заглушка |
+| `10-workflow-delete.png` | workflow удаления | заглушка |
+
+### 7.9. Источники
+
+- Bubble — <https://bubble.io>
+- Build Guides — <https://bubble.io/home/buildguides>
+- Bubble: How to Build a To-Do List App in 10 Minutes — <https://bubble.io/blog/build-to-do-list-app/>
+- Bubble: Getting Started in Bubble — <https://bubble.io/blog/getting-started-building-your-first-app/>
+- Документация Bubble — <https://manual.bubble.io>
+
+---
+
+**Итог:** основные части 1–4 и отчёт выполнены; ачивки части 5 пропущены осознанно.
+Перед защитой остаётся заменить заглушки реальными скриншотами, выполнить Deploy
+и добавить рабочую dev-ссылку.
+
