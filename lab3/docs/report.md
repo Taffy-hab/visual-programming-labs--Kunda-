@@ -82,3 +82,66 @@
 - фамилия указана в точной формулировке из задания.
 
 ---
+
+## 3. Часть 2. Исследование Build Guides
+
+### 3.1. Какие материалы изучены
+
+Раздел [Build Guides](https://bubble.io/home/buildguides) открывается только после входа
+в аккаунт Bubble, поэтому для исследования взяты два публичных гайда Bubble того же
+формата — пошаговое создание приложения с разбором Data, Design и Workflows.
+
+| № | Гайд | Ссылка | Что полезного |
+|---|------|--------|----------------|
+| 1 | **How to Build a To-Do List App in 10 Minutes** (Josh Haas, co-founder Bubble) | [bubble.io/blog/build-to-do-list-app](https://bubble.io/blog/build-to-do-list-app/) | Сначала Data Type и поля, затем Repeating Group, conditional formatting, popup и workflows |
+| 2 | **Getting Started in Bubble: Building Your First App** | [bubble.io/blog/getting-started-building-your-first-app](https://bubble.io/blog/getting-started-building-your-first-app/) | Структура приложения: landing, signup/login, dashboard, страница сущности, пустые состояния, 404 и Deploy |
+
+![Build Guide: To-Do List App](screenshots/02-buildguide-todo.png)
+
+*`02-buildguide-todo.png` — реальный скриншот публичного гайда Bubble «How to Build a To-Do List App in 10 Minutes».*
+
+![Build Guide: Getting Started in Bubble](screenshots/02-buildguide-first-app.png)
+
+*`02-buildguide-first-app.png` — реальный скриншот гайда «Getting Started in Bubble: Building Your First App».*
+
+### 3.2. Что показалось полезным
+
+1. **Data-first.** В обоих гайдах сначала создаётся Data Type и поля, и только потом
+   на страницу добавляются элементы. Для HabitFlow это дало правильный порядок:
+   `Habit` → `HabitLog` → UI, а не наоборот.
+2. **Repeating Group как основа списка.** В to-do-гайде показано, как задать
+   `Type of content = To-do` и `Data source = Search for To-do`, а внутри ячейки
+   использовать `Current cell's To-do`. Этот приём перенесён на карточки привычек.
+3. **Conditional formatting.** Выполненная задача меняет иконку и цвет. В HabitFlow так же
+   подсвечивается привычка, выполненная сегодня, и её прогресс-бар.
+4. **Popup для create/edit.** Форма в popup не загромождает страницу; после сохранения
+   выполняются `Reset relevant inputs` и `Hide element`.
+5. **Пустые состояния и 404.** Во втором гайде отдельно разобраны blank states и страница
+   404 — это добавляет приложению законченный вид.
+
+### 3.3. Какую идею применил
+
+Главная идея — **связка «Data Type → Repeating Group → popup-форма → workflow»**.
+До исследования каркас от AI был простым списком с кнопкой. После — список превращён
+в Repeating Group с типом `Habit`, добавлены карточки с прогрессом, подтверждение
+удаления и пустое состояние «Пока нет привычек».
+
+Дополнительно из второго гайда взята структура страниц: `index` → `signup`/`login` →
+`habits`, а также проверка пустых состояний и заготовка страницы 404.
+
+### 3.4. Скриншоты «до» и «после»
+
+| До | После |
+|---|---|
+| ![Каркас до исследования](screenshots/02-before.png) | ![Каркас после исследования](screenshots/02-after.png) |
+| Простой список и кнопка добавления | Repeating Group, статистика, прогресс, popup и пустое состояние |
+
+*Оба изображения — макеты-заглушки; перед защитой заменяются снимками Preview и редактора Bubble.*
+
+### 3.5. Итог части 2
+
+Исследование изменило не только внешний вид, но и порядок работы: сначала модель данных,
+потом список на Repeating Group, затем формы и workflows. Это уменьшило количество
+переделок на этапах 3–4.
+
+---
