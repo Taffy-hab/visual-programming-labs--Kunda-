@@ -237,3 +237,196 @@
 | Пустое состояние | Repeating Group | текст и кнопка при нуле записей |
 
 ---
+
+## 5. Часть 4. Data и Workflows
+
+### 5.1. Промпт для новой сущности (дословно)
+
+```text
+Придумай структуру данных для трекера привычек на Bubble.
+Нужна основная сущность Habit: название, описание, категория, цель в неделю,
+дата старта, активна ли привычка, владелец (User).
+И отдельная сущность HabitLog для ежедневных отметок: ссылка на привычку,
+дата, выполнено (да/нет), владелец.
+Для каждого поля укажи тип Bubble, обязательность и значение по умолчанию.
+Предложи 3 тестовые записи.
+```
+
+AI предложил разделить данные на две сущности: `Habit` (сама привычка) и `HabitLog`
+(ежедневная отметка). Это удобнее, чем хранить историю в одном поле: можно считать
+серии, строить статистику за неделю и не перезаписывать прошлые дни.
+
+### 5.2. Data Type `Habit`
+
+Создан в **Data → Data types → Create a new type**.
+
+| Поле | Тип Bubble | Обязательное | Значение по умолчанию | Назначение |
+|---|---|---|---|---|
+| `title` | text | да | — | название привычки |
+| `description` | text | нет | — | описание и заметка |
+| `category` | `HabitCategory` (Option Set) | да | `health` | категория |
+| `target_per_week` | number | да | `7` | цель выполнений в неделю |
+| `start_date` | date | да | `Current date/time` | дата старта |
+| `is_active` | yes / no | да | `yes` | активна ли привычка |
+| `owner` | User | да | `Current User` | владелец записи |
+| `streak` | number | да | `0` | текущая серия |
+| `last_completed` | date | нет | — | последняя отметка |
+
+Служебные поля `Created Date` и `Modified Date` Bubble создаёт автоматически.
+
+Option Set `HabitCategory` содержит значения:
+
+- `health` — Здоровье;
+- `study` — Учёба;
+- `sport` — Спорт;
+- `mindfulness` — Осознанность.
+
+### 5.3. Data Type `HabitLog`
+
+| Поле | Тип Bubble | Обязательное | Значение по умолчанию | Назначение |
+|---|---|---|---|---|
+| `habit` | Habit | да | — | ссылка на привычку |
+| `date` | date | да | `Current date/time` | день отметки |
+| `done` | yes / no | да | `yes` | выполнено |
+| `owner` | User | да | `Current User` | владелец |
+
+Связь: одна `Habit` → много `HabitLog` (one-to-many). В `HabitLog` хранится история,
+а в `Habit` — быстрый доступ к текущей серии и последней отметке.
+
+### 5.4. Тестовые записи
+
+Добавлены вручную через **Data → App Data → Habit → New entry**:
+
+| title | category | target_per_week | start_date | is_active | streak |
+|---|---|---:|---|---|---|
+| Чтение 20 минут | study | 7 | 01.10.2026 | yes | 12 |
+| Зарядка утром | health | 5 | 15.09.2026 | yes | 21 |
+| Медитация | mindfulness | 3 | 20.10.2026 | yes | 4 |
+
+Для каждой привычки добавлена отметка `HabitLog` за 31.10.2026 с `done = yes`.
+
+![Data Type Habit и HabitLog](screenshots/06-data-type.png)
+
+*`06-data-type.png` — заглушка: Data → Data types с полями `Habit` и `HabitLog`.*
+
+![Записи в App Data](screenshots/07-data-records.png)
+
+*`07-data-records.png` — заглушка: App Data → Habit с тремя тестовыми записями.*
+
+### 5.5. Страница `habits`
+
+UI рабочей области создан с помощью AI и затем доработан вручную:
+
+- **header** — логотип, навигация, имя пользователя, кнопка Logout;
+- **body** — три карточки статистики, фильтр по категориям, Repeating Group `RG_Habits`;
+- **карточка привычки** — название, категория, прогресс `streak / target_per_week`,
+  кнопки «Выполнено», «Редактировать», «Удалить»;
+- **popup** — `Popup_HabitForm` (создание и редактирование) и `Popup_ConfirmDelete`;
+- **footer** — «ТВП: Кунда» и год.
+
+Repeating Group `RG_Habits`:
+
+| Свойство | Значение |
+|---|---|
+| Type of content | `Habit` |
+| Data source | `Search for Habit` |
+| Constraint 1 | `owner = Current User` |
+| Constraint 2 | `is_active = yes` |
+| Sort | `Created Date` — descending |
+| Layout | vertical, 1 колонка на mobile |
+
+Статистика считается выражениями:
+
+- «Активных привычек» — `RG_Habits:count`;
+- «Выполнено сегодня» — `Search for HabitLog:count` с условиями
+  `owner = Current User` и `date = Current date/time`;
+- «Лучшая серия» — `Search for Habit:max streak`.
+
+### 5.6. Workflows CRUD
+
+Каждое изменяющее действие — отдельный workflow. Read в Bubble реализуется декларативно:
+Repeating Group сам запрашивает данные по `Data source`, поэтому отдельный workflow
+для чтения не нужен; загрузка страницы дополнительно проверяет авторизацию.
+
+#### WF1. Create — `wf_create_habit`
+
+Триггер: кнопка **SaveHabit** в `Popup_HabitForm` → *clicked*.
+
+| Шаг | Действие | Параметры |
+|---|---|---|
+| 1 | Create a new thing | Type `Habit` |
+| 2 | Заполнить поля | `title = Input_Title's value`, `description = MultilineInput_Description's value`, `category = Dropdown_Category's value`, `target_per_week = Input_Target's value`, `start_date = DatePicker_Start's value`, `is_active = yes`, `owner = Current User`, `streak = 0` |
+| 3 | Reset relevant inputs | очистить форму |
+| 4 | Hide element | `Popup_HabitForm` |
+| 5 | Show alert | «Привычка добавлена» |
+
+#### WF2. Read — `RG_Habits` + `wf_page_loaded`
+
+- Repeating Group `RG_Habits` с `Data source = Search for Habit` (constraints из 5.5).
+- `wf_page_loaded`: **When page is loaded** → *if Current User is empty* → **Go to page `login`**.
+- Внутри карточки используются `Current cell's Habit` и `Current cell's Habit's ...`.
+
+#### WF3. Update — `wf_update_habit`
+
+| Шаг | Действие | Параметры |
+|---|---|---|
+| 1 | Edit-кнопка → Display data | `Popup_HabitForm`, data = `Current cell's Habit` |
+| 2 | Show element | `Popup_HabitForm` |
+| 3 | SaveHabit → Make changes to a thing | `Popup_HabitForm's Habit` |
+| 4 | Изменить поля | `title`, `description`, `category`, `target_per_week`, `start_date` |
+| 5 | Reset inputs / Hide popup | закрыть форму |
+| 6 | Show alert | «Изменения сохранены» |
+
+Дополнительно — отметка выполнения `wf_toggle_complete`:
+
+- если за сегодня записи `HabitLog` нет → **Create a new thing** `HabitLog`
+  (`habit = Current cell's Habit`, `date = Current date/time`, `done = yes`, `owner = Current User`)
+  и **Make changes to Habit**: `last_completed = Current date/time`, `streak = streak + 1`;
+- если запись уже есть → **Delete a thing** `HabitLog` и **Make changes to Habit**:
+  `streak = streak - 1`.
+
+#### WF4. Delete — `wf_delete_habit`
+
+| Шаг | Действие | Параметры |
+|---|---|---|
+| 1 | Delete-кнопка → Display data | `Popup_ConfirmDelete`, data = `Current cell's Habit` |
+| 2 | Show element | `Popup_ConfirmDelete` |
+| 3 | ConfirmDelete → Delete a list of things | `HabitLog` where `habit = Popup_ConfirmDelete's Habit` |
+| 4 | Delete a thing | `Popup_ConfirmDelete's Habit` |
+| 5 | Hide element | `Popup_ConfirmDelete` |
+| 6 | Show alert | «Привычка удалена» |
+
+Сначала удаляются связанные отметки, затем сама привычка — иначе в базе останутся
+«осиротевшие» `HabitLog`.
+
+#### WF5. Auth — `wf_signup`, `wf_login`, `wf_logout`
+
+- `wf_signup`: **Sign the user up** (email, password) → **Go to page `habits`**.
+- `wf_login`: **Log the user in** → **Go to page `habits`**.
+- `wf_logout`: **Log the user out** → **Go to page `index`**.
+
+### 5.7. Приватность
+
+В **Data → Privacy** для `Habit` и `HabitLog` включены правила:
+
+- «This Habit is visible to: creator» — владелец видит только свои записи;
+- условие `owner = Current User` для поиска, редактирования и удаления;
+- для остальных пользователей доступа нет.
+
+Это необязательная часть задания, но она делает приложение похожим на реальный продукт.
+
+### 5.8. Скриншоты части 4
+
+![Результат создания привычки в Preview](screenshots/08-workflow-create.png)
+
+*`08-workflow-create.png` — заглушка: Preview после нажатия Save, новая карточка в списке.*
+
+![Workflow создания](screenshots/09-workflow-create.png)
+
+*`09-workflow-create.png` — заглушка: workflow `wf_create_habit` с действиями Create → Reset → Hide → Alert.*
+
+![Workflow удаления](screenshots/10-workflow-delete.png)
+
+*`10-workflow-delete.png` — заглушка: workflow `wf_delete_habit` с подтверждением и Delete a thing.*
+
+---
