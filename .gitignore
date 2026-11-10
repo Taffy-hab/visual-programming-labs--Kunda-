@@ -6,8 +6,28 @@ node_modules/
 # Локальные данные лабораторной №2
 lab2-data.json
 
-# Служебные файлы ОС и редакторов
+# n8n runtime data
+n8n_data/
+n8n_data_files/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Redis dump
+dump.rdb
+appendonly.aof
+redis-data/
+
+# Node
+npm-debug.log*
+
+# OS / editors
+.DS_Store
 Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# Secrets
+.env
+*.token
