@@ -36,12 +36,14 @@
 AI-агент Bubble сгенерировал заготовку из четырёх страниц (index, signup, login, habits). Были созданы header с навигацией, body с карточками статистики и список привычек, а также footer со строкой «ТВП: Кунда». В приложении реализованы элементы для CRUD (попапы, кнопки, инпуты).
 
 ### 2.3. Скриншот
-Окно создания приложения с вставленным промптом: `screenshots/01-prompt.png`.
+![Окно создания приложения с вставленным промптом](../screenshots/01-prompt.png)
 
 ## 3. Часть 2. Исследование Build Guides
 
 ### 3.1. Какие материалы изучены
-В разделе Build Guides был изучен официальный гайд Bubble **«User signup and login»**. Скриншот: `screenshots/02-buildguide.png`.
+В разделе Build Guides был изучен официальный гайд Bubble **«User signup and login»**.
+
+![Гайд User signup and login](../screenshots/02-buildguide.png)
 
 ### 3.2. Что показалось полезным и применено
 - **Структура базы данных:** В гайде показано, как связывать встроенный тип `User` с кастомными типами (в моем случае `Habit` и `HabitLog` через поле `owner`).
@@ -62,15 +64,19 @@ AI-агент Bubble сгенерировал заготовку из четыр
 - Тип: `Color`
 - Значение: `#870DF2` (фиолетовый)
 Применена к кнопкам и акцентным элементам на странице.
-*Скриншот: `screenshots/03-global-variable.png`*
+
+![Глобальная переменная primary-color](../screenshots/03-global-variable.png)
 
 ### 4.3. Новый стиль
 Создан новый стиль для элемента Button с названием **SMTH**. В настройках стиля задан фиолетовый фон, скругление углов и шрифт. Стиль применен к кнопкам в приложении.
-*Скриншот: `screenshots/04-style.png`*
+
+![Создание нового стиля SMTH](../screenshots/04-style.png)
 
 ### 4.4. Готовый компонент
 С помощью библиотеки компонентов (и ИИ-агента) был добавлен и настроен готовый **Footer** (подвал) на страницу index. Ему был присвоен фиолетовый цвет фона на основе `primary-color`, а также добавлена строка «ТВП: Кунда — Трекер привычек».
-*Скриншоты: `screenshots/05-component.png`, `screenshots/05.1-component.png`*
+
+![Добавление компонента Footer](../screenshots/05-component.png)
+![Настроенный Footer](../screenshots/05.1-component.png)
 
 ## 5. Часть 4. Data и Workflows
 
@@ -99,11 +105,12 @@ AI-агент Bubble сгенерировал заготовку из четыр
 - `done` (yes/no)
 - `owner` (User)
 
-*Скриншот типов данных: `screenshots/06-data-type.png`*
+![Типы данных Habit и HabitLog](../screenshots/06-data-type.png)
 
 ### 5.4. Тестовые записи
 Добавлены вручную через Data → App Data → Habit → New entry: Work, Study, Health.
-*Скриншот записей: `screenshots/07-data-records.png`*
+
+![Тестовые записи в App Data](../screenshots/07-data-records.png)
 
 ### 5.5. Workflows CRUD
 В приложении реализованы следующие воркфлоу (на вкладке Workflows):
@@ -111,7 +118,8 @@ AI-агент Bubble сгенерировал заготовку из четыр
 1. **Create (Создание) — `New save`**: 
    Триггер: нажатие кнопки Save в попапе создания.
    Шаги: `Create a new Habit` (создание записи) → показ сообщения об успехе → `Hide New Popup` (закрытие окна) → `Reset relevant inputs` (очистка полей).
-   *Скриншот: `screenshots/09-workflow-create.png`*
+
+   ![Workflow создания привычки](../screenshots/09-workflow-create.png)
 
 2. **Read (Чтение)**: 
    Реализовано через Repeating Group на странице habits (Data source: Search for Habit).
@@ -122,9 +130,12 @@ AI-агент Bubble сгенерировал заготовку из четыр
 4. **Delete (Удаление) — `Del confirm`**:
    Триггер: нажатие кнопки подтверждения удаления.
    Шаги: `Delete a list of HabitLogs` (удаление связанных записей) → `Delete Habit` (удаление самой привычки) → `Hide Del Popup` (закрытие окна).
-   *Скриншот: `screenshots/10-workflow-delete.png`*
 
-*Скриншот работы формы в Preview: `screenshots/08-workflow-create.png`*
+   ![Workflow удаления привычки](../screenshots/10-workflow-delete.png)
+
+Результат работы формы создания в Preview:
+
+![Результат в Preview](../screenshots/08-workflow-create.png)
 
 ## 6. Часть 5. Ачивки
 Ачивки не выполнялись (Часть 5 опциональна, фокус сделан на основной части 1–4).
@@ -132,7 +143,7 @@ AI-агент Bubble сгенерировал заготовку из четыр
 ## 7. Часть 6. Итоговый отчёт
 
 ### 7.1. Ссылка на dev-версию приложения
-**Ссылка:** `ВСТАВИТЬ_ССЫЛКУ_ПОСЛЕ_ДЕПЛОЯ_СЮДА` (например, https://habitflow-ivan.bubbleapps.io)
+**Ссылка:** `ВСТАВИТЬ_ССЫЛКУ_ПОСЛЕ_ДЕПЛОЯ_СЮДА`
 
 ### 7.2. Что сгенерировал AI и что доработано вручную
 - **AI:** Сгенерировал каркас страниц (index, habits), базовую верстку карточек и формы, создал первичные Data Types.
@@ -146,18 +157,3 @@ AI-агент Bubble сгенерировал заготовку из четыр
 2. Связка «Data Type → Repeating Group → Popup → Workflow» является основой любого CRUD-приложения на Bubble.
 3. Использование Global Variables для цветов позволяет быстро менять дизайн всего приложения в пару кликов (например, через переменную `primary-color`).
 4. Понимание того, как работают Workflows (особенно удаление связанных сущностей, как в случае с HabitLog) критически важно для корректной работы базы данных.
-
-### 7.5. Состав папки скриншотов
-```text
-lab3/screenshots/
-├── 01-prompt.png
-├── 02-buildguide.png
-├── 03-global-variable.png
-├── 04-style.png
-├── 05-component.png
-├── 05.1-component.png
-├── 06-data-type.png
-├── 07-data-records.png
-├── 08-workflow-create.png
-├── 09-workflow-create.png
-└── 10-workflow-delete.png
