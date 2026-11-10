@@ -1,598 +1,163 @@
 # Лабораторная работа №3 — Bubble
 
-**Студент:** Кунда Иван  
-**Группа:** УИР-241  
-**Дисциплина:** Технологии визуального программирования  
-**Дата выполнения:** 31.10.2026
-
----
+Студент: Кунда Иван  
+Группа: УИР-241  
+Дисциплина: Технологии визуального программирования  
+Дата выполнения: 11.11.2026
 
 ## 1. Краткое описание
 
-Тема работы — **HabitFlow**, веб-приложение «Трекер привычек» на no-code-платформе
-[Bubble](https://bubble.io). Приложение требует регистрацию, использует структуру
-**header + body + footer**, содержит обязательную строку **«ТВП: Кунда»** и реализует
-полный CRUD для сущности привычки: создание, чтение, редактирование и удаление.
+Тема работы — HabitFlow, веб-приложение «Трекер привычек» на no-code-платформе Bubble. Приложение требует регистрацию, использует структуру header + body + footer, содержит обязательную строку «ТВП: Кунда» и реализует полный CRUD для сущности привычки: создание, чтение, редактирование и удаление.
 
 В работе выполнены:
-
-1. промпт для AI-агента Bubble и каркас приложения;
-2. исследование публичных Build Guides и применение идей в проекте;
-3. ручная доработка UI: заголовок, Global variable, стиль и готовый компонент;
-4. проектирование Data Type `Habit` / `HabitLog` и CRUD-workflows;
-5. итоговый отчёт с промптами, списком освоенных элементов и выводами.
-
-> **О скриншотах.** В папке `lab3/screenshots/` лежат оформленные заглушки с описанием
-> того, что должно быть на каждом снимке. Раздел Build Guides и редактор Bubble требуют
-> авторизованного аккаунта, которого не было в среде выполнения, поэтому снимки редактора
-> помечены как `PLACEHOLDER` и заменяются реальными перед защитой. Два снимка
-> (`02-buildguide-*.png`) — настоящие скриншоты публичных обучающих материалов Bubble.
-
----
+- промпт для AI-агента Bubble и генерация каркаса приложения;
+- исследование публичных Build Guides и применение идей в проекте;
+- ручная доработка UI: заголовок, Global variable, стиль и готовый компонент (Footer);
+- проектирование Data Type Habit / HabitLog и настройка CRUD-workflows;
+- итоговый отчёт с промптами, списком освоенных элементов и выводами.
 
 ## 2. Часть 1. Промпт и генерация каркаса
 
 ### 2.1. Промпт для AI-агента (дословно)
 
-```text
-Создай приложение на тему «Трекер привычек».
-Пусть этот сайт будет требующий регистрацию.
-Страницу обязательно создай по структуре header + body + footer.
-Обязательно укажи в заготовке следующую строку: «ТВП: Кунда».
-Добавь несколько интерактивных элементов (реализующих CRUD):
-1) форму создания привычки с полями «Название», «Описание», «Категория», «Цель в неделю», «Дата старта»;
-2) список привычек в виде карточек с прогрессом и кнопкой отметки выполнения за сегодня;
-3) модальное окно редактирования привычки;
-4) удаление привычки с подтверждением;
-5) счётчики «Активных привычек», «Выполнено сегодня», «Лучшая серия».
-Сделай современный минималистичный интерфейс в фиолетово-зелёной гамме, адаптивный для телефона.
-```
+> Создай приложение на тему «Трекер привычек».
+> Пусть этот сайт будет требующий регистрацию.
+> Страницу обязательно создай по структуре header + body + footer.
+> Обязательно укажи в заготовке следующую строку: «ТВП: Кунда».
+> Добавь несколько интерактивных элементов (реализующих CRUD):
+> 1) форму создания привычки с полями «Название», «Описание», «Категория», «Цель в неделю», «Дата старта»;
+> 2) список привычек в виде карточек с прогрессом и кнопкой отметки выполнения за сегодня;
+> 3) модальное окно редактирования привычки;
+> 4) удаление привычки с подтверждением;
+> 5) счётчики «Активных привычек», «Выполнено сегодня», «Лучшая серия».
+> Сделай современный минималистичный интерфейс в фиолетово-зелёной гамме, адаптивный для телефона.
 
-### 2.2. Что должен создать AI-агент
-
-По промпту AI-агент Bubble генерирует заготовку из четырёх страниц:
-
-| Страница | Назначение | Ключевые элементы |
-|---|---|---|
-| `index` | лендинг | header, hero-блок, кнопки «Начать» и «Войти», footer |
-| `signup` | регистрация | форма e-mail / пароль, кнопка «Создать аккаунт» |
-| `login` | вход | форма входа, ссылка на регистрацию |
-| `habits` | рабочая область | статистика, список привычек, popup создания и редактирования |
-
-Обязательные элементы каркаса:
-
-- **header** — логотип `HabitFlow`, навигация «Мои привычки» / «Статистика», аватар пользователя;
-- **body** — три карточки статистики, фильтр по категориям, Repeating Group с привычками;
-- **footer** — строка **«ТВП: Кунда»**, год и ссылка на исходный репозиторий;
-- **CRUD-элементы** — кнопка добавления, карточки с чекбоксом, кнопки редактирования и удаления.
+### 2.2. Результат генерации
+AI-агент Bubble сгенерировал заготовку из четырёх страниц (index, signup, login, habits). Были созданы header с навигацией, body с карточками статистики и список привычек, а также footer со строкой «ТВП: Кунда». В приложении реализованы элементы для CRUD (попапы, кнопки, инпуты).
 
 ### 2.3. Скриншот
-
-![Промпт для AI-агента Bubble](screenshots/01-prompt.png)
-
-*`01-prompt.png` — заглушка: окно AI-агента Bubble с вставленным промптом и началом генерации.
-Перед защитой заменить реальным снимком.*
-
-### 2.4. Почему промпт сформулирован именно так
-
-- явно задана тема и требование регистрации — AI не делает приложение публичным;
-- перечислены **все три зоны** страницы, чтобы не потерялся footer со строкой «ТВП: Кунда»;
-- CRUD разложен на пять конкретных UI-сценариев — AI создаёт не абстрактный список, а готовые формы и кнопки;
-- задана цветовая гамма и адаптивность — меньше ручной правки на этапе 3;
-- фамилия указана в точной формулировке из задания.
-
----
+Окно создания приложения с вставленным промптом: `screenshots/01-prompt.png`.
 
 ## 3. Часть 2. Исследование Build Guides
 
 ### 3.1. Какие материалы изучены
+В разделе Build Guides был изучен официальный гайд Bubble **«User signup and login»**. Скриншот: `screenshots/02-buildguide.png`.
 
-Раздел [Build Guides](https://bubble.io/home/buildguides) открывается только после входа
-в аккаунт Bubble, поэтому для исследования взяты два публичных гайда Bubble того же
-формата — пошаговое создание приложения с разбором Data, Design и Workflows.
-
-| № | Гайд | Ссылка | Что полезного |
-|---|------|--------|----------------|
-| 1 | **How to Build a To-Do List App in 10 Minutes** (Josh Haas, co-founder Bubble) | [bubble.io/blog/build-to-do-list-app](https://bubble.io/blog/build-to-do-list-app/) | Сначала Data Type и поля, затем Repeating Group, conditional formatting, popup и workflows |
-| 2 | **Getting Started in Bubble: Building Your First App** | [bubble.io/blog/getting-started-building-your-first-app](https://bubble.io/blog/getting-started-building-your-first-app/) | Структура приложения: landing, signup/login, dashboard, страница сущности, пустые состояния, 404 и Deploy |
-
-![Build Guide: To-Do List App](screenshots/02-buildguide-todo.png)
-
-*`02-buildguide-todo.png` — реальный скриншот публичного гайда Bubble «How to Build a To-Do List App in 10 Minutes».*
-
-![Build Guide: Getting Started in Bubble](screenshots/02-buildguide-first-app.png)
-
-*`02-buildguide-first-app.png` — реальный скриншот гайда «Getting Started in Bubble: Building Your First App».*
-
-### 3.2. Что показалось полезным
-
-1. **Data-first.** В обоих гайдах сначала создаётся Data Type и поля, и только потом
-   на страницу добавляются элементы. Для HabitFlow это дало правильный порядок:
-   `Habit` → `HabitLog` → UI, а не наоборот.
-2. **Repeating Group как основа списка.** В to-do-гайде показано, как задать
-   `Type of content = To-do` и `Data source = Search for To-do`, а внутри ячейки
-   использовать `Current cell's To-do`. Этот приём перенесён на карточки привычек.
-3. **Conditional formatting.** Выполненная задача меняет иконку и цвет. В HabitFlow так же
-   подсвечивается привычка, выполненная сегодня, и её прогресс-бар.
-4. **Popup для create/edit.** Форма в popup не загромождает страницу; после сохранения
-   выполняются `Reset relevant inputs` и `Hide element`.
-5. **Пустые состояния и 404.** Во втором гайде отдельно разобраны blank states и страница
-   404 — это добавляет приложению законченный вид.
-
-### 3.3. Какую идею применил
-
-Главная идея — **связка «Data Type → Repeating Group → popup-форма → workflow»**.
-До исследования каркас от AI был простым списком с кнопкой. После — список превращён
-в Repeating Group с типом `Habit`, добавлены карточки с прогрессом, подтверждение
-удаления и пустое состояние «Пока нет привычек».
-
-Дополнительно из второго гайда взята структура страниц: `index` → `signup`/`login` →
-`habits`, а также проверка пустых состояний и заготовка страницы 404.
-
-### 3.4. Скриншоты «до» и «после»
-
-| До | После |
-|---|---|
-| ![Каркас до исследования](screenshots/02-before.png) | ![Каркас после исследования](screenshots/02-after.png) |
-| Простой список и кнопка добавления | Repeating Group, статистика, прогресс, popup и пустое состояние |
-
-*Оба изображения — макеты-заглушки; перед защитой заменяются снимками Preview и редактора Bubble.*
-
-### 3.5. Итог части 2
-
-Исследование изменило не только внешний вид, но и порядок работы: сначала модель данных,
-потом список на Repeating Group, затем формы и workflows. Это уменьшило количество
-переделок на этапах 3–4.
-
----
+### 3.2. Что показалось полезным и применено
+- **Структура базы данных:** В гайде показано, как связывать встроенный тип `User` с кастомными типами (в моем случае `Habit` и `HabitLog` через поле `owner`).
+- **Data-first подход:** Сначала создаются Data Types и поля, и только потом настраивается UI и workflows.
+- **Связь страниц:** Настройка переходов между страницей регистрации и личным кабинетом после успешного создания аккаунта.
 
 ## 4. Часть 3. Ручная доработка UI
 
-Все изменения этого раздела сделаны вручную в редакторе Bubble, без AI-агента.
+Все изменения этого раздела сделаны вручную в редакторе Bubble.
 
 ### 4.1. Заголовок с именем
-
-В Design → страница `habits` заголовок был изменён с автоматического `Habit Tracker`
-на:
-
-> **HabitFlow — трекер привычек Ивана Кунды**
-
-В footer сохранена обязательная строка **«ТВП: Кунда»**. Имя добавлено в заголовок,
-фамилия осталась и в заголовке, и в footer — требование задания выполнено.
-
-Дополнительно поправлены:
-
-- логотип в header: иконка `checkmark-circled` + текст `HabitFlow`;
-- навигация: «Мои привычки», «Статистика», аватар пользователя;
-- отступы body: 32 px по краям на desktop, 16 px на mobile;
-- пустое состояние: «Пока нет привычек. Добавьте первую — и начните серию».
+В Design → страница habits заголовок был изменён на: **«Мои привычки — Иван»** (имя добавлено). В footer сохранена обязательная строка «ТВП: Кунда».
 
 ### 4.2. Global variable для цвета
-
-Переход: **Design → Global → Variables → Create a new variable**.
-
-| Имя | Тип | Значение | Где применена |
-|---|---|---|---|
-| `primary-color` | Color | `#6C5CE7` | фон основной кнопки, активная вкладка, progress bar |
-| `accent-color` | Color | `#00B894` | галочка выполнения, положительная статистика |
-| `surface-color` | Color | `#10172B` | фон карточек в тёмной теме |
-
-Основная переменная — `primary-color`. Она применена к кнопке «Добавить привычку»,
-кнопке «Сохранить» в popup и к активному пункту фильтра. Благодаря этому цвет меняется
-в одном месте и сразу подхватывается во всех элементах.
-
-![Global variable primary-color](screenshots/03-global-variable.png)
-
-*`03-global-variable.png` — заглушка: панель Global → Variables с переменной `primary-color` типа Color.*
+Переход: Design → Global → Variables → Create a new variable. 
+Создана переменная:
+- Имя: `primary-color`
+- Тип: `Color`
+- Значение: `#870DF2` (фиолетовый)
+Применена к кнопкам и акцентным элементам на странице.
+*Скриншот: `screenshots/03-global-variable.png`*
 
 ### 4.3. Новый стиль
-
-Создан стиль **`Button / Primary`** для элемента Button:
-
-| Свойство | Значение |
-|---|---|
-| Background | `primary-color` (Global variable) |
-| Font | Segoe UI, 16 px, semibold |
-| Text color | `#FFFFFF` |
-| Border radius | 12 px |
-| Padding | 14 px / 24 px |
-| Shadow | `0 8px 20px rgba(108, 92, 231, 0.25)` |
-| Hover | та же кнопка с opacity 90 % |
-
-Стиль применён к кнопкам «Добавить привычку» и «Сохранить». Дополнительно созданы
-стили `Text / H1`, `Card / Habit` и `Input / Default`, чтобы карточки и поля выглядели
-единообразно.
-
-![Стиль Primary Button](screenshots/04-style.png)
-
-*`04-style.png` — заглушка: редактор стиля Button / Primary со ссылкой на `primary-color`.*
+Создан новый стиль для элемента Button с названием **SMTH**. В настройках стиля задан фиолетовый фон, скругление углов и шрифт. Стиль применен к кнопкам в приложении.
+*Скриншот: `screenshots/04-style.png`*
 
 ### 4.4. Готовый компонент
-
-В библиотеке **COMPONENTS** выбран готовый компонент **Signup Form** (форма регистрации).
-Он перетащен на страницу `signup` и настроен под проект:
-
-- заменён заголовок на «Создать аккаунт в HabitFlow»;
-- поля Email и Password оставлены, добавлена подпись «Пароль — не менее 8 символов»;
-- кнопка перекрашена в `primary-color`, применён стиль `Button / Primary`;
-- добавлена ссылка «Уже есть аккаунт? Войти»;
-- форма связана с workflow `Sign the user up`.
-
-Компонент не дублирует элементы, которые уже были на странице: на `signup` до этого
-не было формы, поэтому библиотечный блок полностью заменяет ручную сборку.
-
-![Готовый компонент Signup Form](screenshots/05-component.png)
-
-*`05-component.png` — заглушка: компонент Signup Form на странице signup после настройки.*
-
-### 4.5. Чек-лист ручных изменений
-
-| Что | Где | Результат |
-|---|---|---|
-| Заголовок с именем | `habits`, Text H1 | «HabitFlow — трекер привычек Ивана Кунды» |
-| Global variable | Global → Variables | `primary-color`, `accent-color`, `surface-color` |
-| Стиль кнопки | Styles → Button | `Button / Primary` на базе `primary-color` |
-| Компонент | COMPONENTS → Signup Form | форма регистрации на `signup` |
-| Адаптивность | Design → Responsive | карточки в одну колонку на mobile |
-| Пустое состояние | Repeating Group | текст и кнопка при нуле записей |
-
----
+С помощью библиотеки компонентов (и ИИ-агента) был добавлен и настроен готовый **Footer** (подвал) на страницу index. Ему был присвоен фиолетовый цвет фона на основе `primary-color`, а также добавлена строка «ТВП: Кунда — Трекер привычек».
+*Скриншоты: `screenshots/05-component.png`, `screenshots/05.1-component.png`*
 
 ## 5. Часть 4. Data и Workflows
 
 ### 5.1. Промпт для новой сущности (дословно)
+> Придумай структуру данных для трекера привычек на Bubble.
+> Нужна основная сущность Habit: название, описание, категория, цель в неделю, дата старта, активна ли привычка, владелец (User).
+> И отдельная сущность HabitLog для ежедневных отметок: ссылка на привычку, дата, выполнено (да/нет), владелец.
+> Для каждого поля укажи тип Bubble, обязательность и значение по умолчанию.
+> Предложи 3 тестовые записи.
 
-```text
-Придумай структуру данных для трекера привычек на Bubble.
-Нужна основная сущность Habit: название, описание, категория, цель в неделю,
-дата старта, активна ли привычка, владелец (User).
-И отдельная сущность HabitLog для ежедневных отметок: ссылка на привычку,
-дата, выполнено (да/нет), владелец.
-Для каждого поля укажи тип Bubble, обязательность и значение по умолчанию.
-Предложи 3 тестовые записи.
-```
+### 5.2. Data Type Habit
+Создан в Data → Data types. Поля:
+- `title` (text)
+- `description` (text)
+- `category` (HabitCategory - Option Set)
+- `target_per_week` (number)
+- `start_date` (date)
+- `is_active` (yes/no)
+- `owner` (User)
+- `streak` (number)
 
-AI предложил разделить данные на две сущности: `Habit` (сама привычка) и `HabitLog`
-(ежедневная отметка). Это удобнее, чем хранить историю в одном поле: можно считать
-серии, строить статистику за неделю и не перезаписывать прошлые дни.
+### 5.3. Data Type HabitLog
+Поля:
+- `habit` (Habit)
+- `date` (date)
+- `done` (yes/no)
+- `owner` (User)
 
-### 5.2. Data Type `Habit`
-
-Создан в **Data → Data types → Create a new type**.
-
-| Поле | Тип Bubble | Обязательное | Значение по умолчанию | Назначение |
-|---|---|---|---|---|
-| `title` | text | да | — | название привычки |
-| `description` | text | нет | — | описание и заметка |
-| `category` | `HabitCategory` (Option Set) | да | `health` | категория |
-| `target_per_week` | number | да | `7` | цель выполнений в неделю |
-| `start_date` | date | да | `Current date/time` | дата старта |
-| `is_active` | yes / no | да | `yes` | активна ли привычка |
-| `owner` | User | да | `Current User` | владелец записи |
-| `streak` | number | да | `0` | текущая серия |
-| `last_completed` | date | нет | — | последняя отметка |
-
-Служебные поля `Created Date` и `Modified Date` Bubble создаёт автоматически.
-
-Option Set `HabitCategory` содержит значения:
-
-- `health` — Здоровье;
-- `study` — Учёба;
-- `sport` — Спорт;
-- `mindfulness` — Осознанность.
-
-### 5.3. Data Type `HabitLog`
-
-| Поле | Тип Bubble | Обязательное | Значение по умолчанию | Назначение |
-|---|---|---|---|---|
-| `habit` | Habit | да | — | ссылка на привычку |
-| `date` | date | да | `Current date/time` | день отметки |
-| `done` | yes / no | да | `yes` | выполнено |
-| `owner` | User | да | `Current User` | владелец |
-
-Связь: одна `Habit` → много `HabitLog` (one-to-many). В `HabitLog` хранится история,
-а в `Habit` — быстрый доступ к текущей серии и последней отметке.
+*Скриншот типов данных: `screenshots/06-data-type.png`*
 
 ### 5.4. Тестовые записи
+Добавлены вручную через Data → App Data → Habit → New entry: Work, Study, Health.
+*Скриншот записей: `screenshots/07-data-records.png`*
 
-Добавлены вручную через **Data → App Data → Habit → New entry**:
+### 5.5. Workflows CRUD
+В приложении реализованы следующие воркфлоу (на вкладке Workflows):
 
-| title | category | target_per_week | start_date | is_active | streak |
-|---|---|---:|---|---|---|
-| Чтение 20 минут | study | 7 | 01.10.2026 | yes | 12 |
-| Зарядка утром | health | 5 | 15.09.2026 | yes | 21 |
-| Медитация | mindfulness | 3 | 20.10.2026 | yes | 4 |
+1. **Create (Создание) — `New save`**: 
+   Триггер: нажатие кнопки Save в попапе создания.
+   Шаги: `Create a new Habit` (создание записи) → показ сообщения об успехе → `Hide New Popup` (закрытие окна) → `Reset relevant inputs` (очистка полей).
+   *Скриншот: `screenshots/09-workflow-create.png`*
 
-Для каждой привычки добавлена отметка `HabitLog` за 31.10.2026 с `done = yes`.
+2. **Read (Чтение)**: 
+   Реализовано через Repeating Group на странице habits (Data source: Search for Habit).
 
-![Data Type Habit и HabitLog](screenshots/06-data-type.png)
+3. **Update (Обновление)**: 
+   Через кнопку редактирования (Make changes to a thing).
 
-*`06-data-type.png` — заглушка: Data → Data types с полями `Habit` и `HabitLog`.*
+4. **Delete (Удаление) — `Del confirm`**:
+   Триггер: нажатие кнопки подтверждения удаления.
+   Шаги: `Delete a list of HabitLogs` (удаление связанных записей) → `Delete Habit` (удаление самой привычки) → `Hide Del Popup` (закрытие окна).
+   *Скриншот: `screenshots/10-workflow-delete.png`*
 
-![Записи в App Data](screenshots/07-data-records.png)
-
-*`07-data-records.png` — заглушка: App Data → Habit с тремя тестовыми записями.*
-
-### 5.5. Страница `habits`
-
-UI рабочей области создан с помощью AI и затем доработан вручную:
-
-- **header** — логотип, навигация, имя пользователя, кнопка Logout;
-- **body** — три карточки статистики, фильтр по категориям, Repeating Group `RG_Habits`;
-- **карточка привычки** — название, категория, прогресс `streak / target_per_week`,
-  кнопки «Выполнено», «Редактировать», «Удалить»;
-- **popup** — `Popup_HabitForm` (создание и редактирование) и `Popup_ConfirmDelete`;
-- **footer** — «ТВП: Кунда» и год.
-
-Repeating Group `RG_Habits`:
-
-| Свойство | Значение |
-|---|---|
-| Type of content | `Habit` |
-| Data source | `Search for Habit` |
-| Constraint 1 | `owner = Current User` |
-| Constraint 2 | `is_active = yes` |
-| Sort | `Created Date` — descending |
-| Layout | vertical, 1 колонка на mobile |
-
-Статистика считается выражениями:
-
-- «Активных привычек» — `RG_Habits:count`;
-- «Выполнено сегодня» — `Search for HabitLog:count` с условиями
-  `owner = Current User` и `date = Current date/time`;
-- «Лучшая серия» — `Search for Habit:max streak`.
-
-### 5.6. Workflows CRUD
-
-Каждое изменяющее действие — отдельный workflow. Read в Bubble реализуется декларативно:
-Repeating Group сам запрашивает данные по `Data source`, поэтому отдельный workflow
-для чтения не нужен; загрузка страницы дополнительно проверяет авторизацию.
-
-#### WF1. Create — `wf_create_habit`
-
-Триггер: кнопка **SaveHabit** в `Popup_HabitForm` → *clicked*.
-
-| Шаг | Действие | Параметры |
-|---|---|---|
-| 1 | Create a new thing | Type `Habit` |
-| 2 | Заполнить поля | `title = Input_Title's value`, `description = MultilineInput_Description's value`, `category = Dropdown_Category's value`, `target_per_week = Input_Target's value`, `start_date = DatePicker_Start's value`, `is_active = yes`, `owner = Current User`, `streak = 0` |
-| 3 | Reset relevant inputs | очистить форму |
-| 4 | Hide element | `Popup_HabitForm` |
-| 5 | Show alert | «Привычка добавлена» |
-
-#### WF2. Read — `RG_Habits` + `wf_page_loaded`
-
-- Repeating Group `RG_Habits` с `Data source = Search for Habit` (constraints из 5.5).
-- `wf_page_loaded`: **When page is loaded** → *if Current User is empty* → **Go to page `login`**.
-- Внутри карточки используются `Current cell's Habit` и `Current cell's Habit's ...`.
-
-#### WF3. Update — `wf_update_habit`
-
-| Шаг | Действие | Параметры |
-|---|---|---|
-| 1 | Edit-кнопка → Display data | `Popup_HabitForm`, data = `Current cell's Habit` |
-| 2 | Show element | `Popup_HabitForm` |
-| 3 | SaveHabit → Make changes to a thing | `Popup_HabitForm's Habit` |
-| 4 | Изменить поля | `title`, `description`, `category`, `target_per_week`, `start_date` |
-| 5 | Reset inputs / Hide popup | закрыть форму |
-| 6 | Show alert | «Изменения сохранены» |
-
-Дополнительно — отметка выполнения `wf_toggle_complete`:
-
-- если за сегодня записи `HabitLog` нет → **Create a new thing** `HabitLog`
-  (`habit = Current cell's Habit`, `date = Current date/time`, `done = yes`, `owner = Current User`)
-  и **Make changes to Habit**: `last_completed = Current date/time`, `streak = streak + 1`;
-- если запись уже есть → **Delete a thing** `HabitLog` и **Make changes to Habit**:
-  `streak = streak - 1`.
-
-#### WF4. Delete — `wf_delete_habit`
-
-| Шаг | Действие | Параметры |
-|---|---|---|
-| 1 | Delete-кнопка → Display data | `Popup_ConfirmDelete`, data = `Current cell's Habit` |
-| 2 | Show element | `Popup_ConfirmDelete` |
-| 3 | ConfirmDelete → Delete a list of things | `HabitLog` where `habit = Popup_ConfirmDelete's Habit` |
-| 4 | Delete a thing | `Popup_ConfirmDelete's Habit` |
-| 5 | Hide element | `Popup_ConfirmDelete` |
-| 6 | Show alert | «Привычка удалена» |
-
-Сначала удаляются связанные отметки, затем сама привычка — иначе в базе останутся
-«осиротевшие» `HabitLog`.
-
-#### WF5. Auth — `wf_signup`, `wf_login`, `wf_logout`
-
-- `wf_signup`: **Sign the user up** (email, password) → **Go to page `habits`**.
-- `wf_login`: **Log the user in** → **Go to page `habits`**.
-- `wf_logout`: **Log the user out** → **Go to page `index`**.
-
-### 5.7. Приватность
-
-В **Data → Privacy** для `Habit` и `HabitLog` включены правила:
-
-- «This Habit is visible to: creator» — владелец видит только свои записи;
-- условие `owner = Current User` для поиска, редактирования и удаления;
-- для остальных пользователей доступа нет.
-
-Это необязательная часть задания, но она делает приложение похожим на реальный продукт.
-
-### 5.8. Скриншоты части 4
-
-![Результат создания привычки в Preview](screenshots/08-workflow-create.png)
-
-*`08-workflow-create.png` — заглушка: Preview после нажатия Save, новая карточка в списке.*
-
-![Workflow создания](screenshots/09-workflow-create.png)
-
-*`09-workflow-create.png` — заглушка: workflow `wf_create_habit` с действиями Create → Reset → Hide → Alert.*
-
-![Workflow удаления](screenshots/10-workflow-delete.png)
-
-*`10-workflow-delete.png` — заглушка: workflow `wf_delete_habit` с подтверждением и Delete a thing.*
-
----
+*Скриншот работы формы в Preview: `screenshots/08-workflow-create.png`*
 
 ## 6. Часть 5. Ачивки
-
-Ачивки **не выполнялись**: по заданию они опциональны, а часть 5 разрешает
-сосредоточиться на основных этапах 1–4 и отчёте.
-
-- API Connector не подключался, файл `lab3/docs/api.md` не создавался.
-- Плагины не устанавливались, скриншоты `11-api-*.png` и `12-plugin-*.png` отсутствуют.
-
----
+Ачивки не выполнялись (Часть 5 опциональна, фокус сделан на основной части 1–4).
 
 ## 7. Часть 6. Итоговый отчёт
 
-### 7.1. Краткое описание выполненного
+### 7.1. Ссылка на dev-версию приложения
+**Ссылка:** `ВСТАВИТЬ_ССЫЛКУ_ПОСЛЕ_ДЕПЛОЯ_СЮДА` (например, https://habitflow-ivan.bubbleapps.io)
 
-Спроектировано приложение **HabitFlow** — трекер привычек с регистрацией, структурой
-header + body + footer, строкой «ТВП: Кунда» и полным CRUD. Подготовлены промпт для
-AI-агента, каркас из четырёх страниц, ручная доработка UI (заголовок, три Global
-variable, стили, готовый компонент Signup Form), две сущности Data (`Habit`,
-`HabitLog`), тестовые записи и workflows для создания, чтения, редактирования,
-отметки выполнения и удаления. Оформлен отчёт и набор скриншотов-заглушек.
+### 7.2. Что сгенерировал AI и что доработано вручную
+- **AI:** Сгенерировал каркас страниц (index, habits), базовую верстку карточек и формы, создал первичные Data Types.
+- **Вручную:** Изменил заголовок (добавил имя), создал переменную `primary-color`, настроил новый стиль кнопки `SMTH`, применил готовый компонент Footer, настроил логику Workflows (создание, удаление, сброс инпутов), создал Option Set для категорий.
 
-### 7.2. Ссылка на dev-версию
+### 7.3. Освоенные элементы и workflows
+В ходе работы были освоены: Global Variables (Colors), Стили (Styles), готовые компоненты (Components), Data Types, Option Sets, Repeating Groups, Popups, Inputs, Dropdowns, а также Workflows: *Create a new thing, Delete a thing, Delete a list of things, Reset relevant inputs, Hide element, Show message*.
 
-**Статус:** `TODO — добавить после Deploy`.
+### 7.4. Выводы
+1. AI-агент в Bubble отлично справляется с черновой работой: генерацией страниц и базового дизайна, что экономит время.
+2. Связка «Data Type → Repeating Group → Popup → Workflow» является основой любого CRUD-приложения на Bubble.
+3. Использование Global Variables для цветов позволяет быстро менять дизайн всего приложения в пару кликов (например, через переменную `primary-color`).
+4. Понимание того, как работают Workflows (особенно удаление связанных сущностей, как в случае с HabitLog) критически важно для корректной работы базы данных.
 
-```
-https://<app-name>.bubbleapps.io
-```
-
-В среде выполнения не было авторизованного аккаунта Bubble, поэтому приложение не
-опубликовано и рабочая ссылка не выдаётся за существующую. После входа в Bubble нужно
-нажать **Deploy → Deploy to Live** (или использовать Preview-ссылку) и вписать адрес
-в эту строку.
-
-### 7.3. Использованные AI-промпты
-
-| № | Назначение | Где в отчёте | Промпт |
-|---|---|---|---|
-| 1 | Генерация каркаса HabitFlow | раздел 2.1 | тема, регистрация, header + body + footer, «ТВП: Кунда», 5 CRUD-сценариев, фиолетово-зелёная гамма |
-| 2 | Структура новой сущности | раздел 5.1 | `Habit` + `HabitLog`, типы полей, обязательность, значения по умолчанию, 3 записи |
-
-Оба промпта приведены в отчёте **дословно** в блоках `text`. Других AI-промптов
-для генерации приложения не использовалось; исследование Build Guides выполнялось
-вручную по публичным материалам Bubble.
-
-### 7.4. Освоенные элементы и workflows
-
-| Группа | Элементы и приёмы |
-|---|---|
-| Design | header, footer, Text, Button, Icon, Image, Input, Multiline Input, Dropdown, Date Picker, Group, Repeating Group, Popup, Alert, Progress Bar |
-| Композиция | reusable header/footer, готовый компонент **Signup Form**, адаптивная вёрстка |
-| Стили | Global variables (`primary-color`, `accent-color`, `surface-color`), стили `Button / Primary`, `Text / H1`, `Card / Habit`, `Input / Default` |
-| Data | Data Type, поля text / number / date / yes-no / User / Habit, Option Set `HabitCategory`, App Data, Privacy Rules |
-| Workflows | Create a new thing, Make changes to a thing, Delete a thing, Delete a list of things, Reset relevant inputs, Show/Hide element, Go to page, Display data, Sign the user up, Log the user in, Log the user out |
-| Логика | условия `Current User is empty`, `owner = Current User`, счётчики через `Search for ... :count`, серия через `streak + 1` |
-
-| Workflow | Триггер | Суть |
-|---|---|---|
-| `wf_create_habit` | SaveHabit → clicked | Create `Habit` → Reset inputs → Hide popup → Alert |
-| `RG_Habits` + `wf_page_loaded` | page load / data source | Search `Habit` по `owner = Current User`; редирект гостя на `login` |
-| `wf_update_habit` | Edit → clicked, SaveHabit → clicked | Display data → Make changes to `Popup_HabitForm's Habit` |
-| `wf_toggle_complete` | чекбокс → clicked | Create/Delete `HabitLog` + обновление `streak` и `last_completed` |
-| `wf_delete_habit` | Delete → ConfirmDelete | Delete `HabitLog` → Delete `Habit` → Hide → Alert |
-| `wf_signup` / `wf_login` / `wf_logout` | кнопки форм | Sign up / Log in / Log out + Go to page |
-
-### 7.5. Что сгенерировал AI и что доработано вручную
-
-| Этап | AI | Вручную |
-|---|---|---|
-| Страницы | 4 страницы, базовая навигация, header/body/footer | заголовок с именем, footer «ТВП: Кунда», пустые состояния |
-| UI | список, кнопки, простая форма | Repeating Group, карточки, статистика, фильтр, popup, прогресс-бар |
-| Стили | стартовая палитра | Global variables, `Button / Primary`, `Text / H1`, `Card / Habit`, `Input / Default` |
-| Компоненты | базовая страница регистрации | готовый Signup Form из COMPONENTS и его настройка |
-| Data | черновой набор полей | `Habit` + `HabitLog`, типы, обязательность, Option Set, 3 записи, Privacy Rules |
-| Workflows | заготовки кнопок | 5 CRUD-workflow, проверка авторизации, удаление связанных логов, alert-сообщения |
-| Адаптивность | базовая | одна колонка на mobile, отступы 16 px, размеры шрифтов |
-
-### 7.6. Выводы
-
-1. **AI ускоряет старт, но не заменяет проектирование.** Готовый каркас появился быстро,
-   однако без точного промпта AI легко теряет footer, строку «ТВП» или делает список
-   вместо полноценного CRUD. Чем конкретнее сценарии в промпте, тем меньше ручной правки.
-2. **Порядок «Data → UI → Workflows» экономит время.** Когда сначала описаны `Habit`
-   и `HabitLog`, Repeating Group и формы собираются предсказуемо. Попытка начать с UI
-   приводит к переделке полей и связей.
-3. **Bubble разделяет чтение и изменение.** Read — это `Data source` Repeating Group,
-   а Create/Update/Delete — отдельные workflow-события. Понимание этого разделения
-   ключевое для защиты.
-4. **Global variables и стили дают единый дизайн.** Одна переменная `primary-color`
-   меняет кнопки, активные вкладки и прогресс; стили убирают ручную настройку каждого
-   элемента. Готовый компонент Signup Form сокращает сборку страницы регистрации.
-5. **Приватность и пустые состояния — часть продукта.** Правило `owner = Current User`
-   не даёт видеть чужие привычки, а пустое состояние и подтверждение удаления делают
-   приложение понятным и безопасным.
-6. **Ограничение работы:** Build Guides и редактор Bubble требуют аккаунта. В отчёте
-   использованы публичные гайды Bubble, а снимки редактора заменены заглушками; перед
-   защитой их нужно заменить реальными скриншотами и добавить dev-ссылку.
-
-### 7.7. Что проверить перед защитой
-
-- [ ] Заменить `01-prompt.png`, `03-global-variable.png`, `04-style.png`, `05-component.png`,
-      `06-data-type.png`, `07-data-records.png`, `08-workflow-create.png`,
-      `09-workflow-create.png`, `10-workflow-delete.png` реальными снимками Bubble.
-- [ ] Оставить `02-buildguide-*.png` — это настоящие скриншоты публичных гайдов.
-- [ ] Сделать Deploy и вписать dev-ссылку в раздел 7.2.
-- [ ] Пройти CRUD в Preview: создать, открыть, изменить, отметить, удалить привычку.
-- [ ] Показать строку «ТВП: Кунда» в footer и имя в заголовке.
-- [ ] Показать `git log` — не менее 4 осмысленных коммитов.
-- [ ] Объяснить: что сделал AI, что вручную; как устроены `Habit`/`HabitLog`;
-      как работают Create/Read/Update/Delete; где применяются Global variables и стили.
-
-### 7.8. Состав репозитория и скриншоты
-
+### 7.5. Состав папки скриншотов
 ```text
-visual-programming-labs--Kunda-/
-├── README.md
-└── lab3/
-    ├── docs/
-    │   └── report.md
-    └── screenshots/
-        ├── 01-prompt.png
-        ├── 02-buildguide-todo.png
-        ├── 02-buildguide-first-app.png
-        ├── 02-before.png
-        ├── 02-after.png
-        ├── 03-global-variable.png
-        ├── 04-style.png
-        ├── 05-component.png
-        ├── 06-data-type.png
-        ├── 07-data-records.png
-        ├── 08-workflow-create.png
-        ├── 09-workflow-create.png
-        └── 10-workflow-delete.png
-```
-
-| Скриншот | Что показывает | Статус |
-|---|---|---|
-| `01-prompt.png` | промпт в AI-агенте Bubble | заглушка |
-| `02-buildguide-todo.png` | публичный гайд Bubble по to-do | реальный снимок |
-| `02-buildguide-first-app.png` | публичный гайд Getting Started | реальный снимок |
-| `02-before.png` | каркас до исследования | макет |
-| `02-after.png` | каркас после применения идеи | макет |
-| `03-global-variable.png` | `primary-color` в Global → Variables | заглушка |
-| `04-style.png` | стиль `Button / Primary` | заглушка |
-| `05-component.png` | Signup Form из COMPONENTS | заглушка |
-| `06-data-type.png` | `Habit` и `HabitLog` | заглушка |
-| `07-data-records.png` | 3 записи в App Data | заглушка |
-| `08-workflow-create.png` | результат Create в Preview | заглушка |
-| `09-workflow-create.png` | workflow создания | заглушка |
-| `10-workflow-delete.png` | workflow удаления | заглушка |
-
-### 7.9. Источники
-
-- Bubble — <https://bubble.io>
-- Build Guides — <https://bubble.io/home/buildguides>
-- Bubble: How to Build a To-Do List App in 10 Minutes — <https://bubble.io/blog/build-to-do-list-app/>
-- Bubble: Getting Started in Bubble — <https://bubble.io/blog/getting-started-building-your-first-app/>
-- Документация Bubble — <https://manual.bubble.io>
-
----
-
-**Итог:** основные части 1–4 и отчёт выполнены; ачивки части 5 пропущены осознанно.
-Перед защитой остаётся заменить заглушки реальными скриншотами, выполнить Deploy
-и добавить рабочую dev-ссылку.
-
+lab3/screenshots/
+├── 01-prompt.png
+├── 02-buildguide.png
+├── 03-global-variable.png
+├── 04-style.png
+├── 05-component.png
+├── 05.1-component.png
+├── 06-data-type.png
+├── 07-data-records.png
+├── 08-workflow-create.png
+├── 09-workflow-create.png
+└── 10-workflow-delete.png
