@@ -10,7 +10,7 @@
 //   node lab5/screenshots/capture.mjs
 //
 // При желании переопределите адреса через переменные окружения, например:
-//   TYPEBOT_URL=https://app.typebot.io/ node lab5/screenshots/capture.mjs
+//   TYPEBOT_URL=https://app.typebot.com/ node lab5/screenshots/capture.mjs
 
 import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
@@ -21,16 +21,16 @@ const PROFILE_DIR = './.playwright-typebot-profile';
 mkdirSync(OUTPUT_DIR, { recursive: true });
 
 const targets = [
-  ['01-registration', process.env.TYPEBOT_URL || 'https://app.typebot.io/'],
-  ['02-workspace', process.env.TYPEBOT_WORKSPACE_URL || 'https://app.typebot.io/'],
-  ['03-template', process.env.TYPEBOT_TEMPLATE_URL || 'https://app.typebot.io/'],
-  ['04-variables', process.env.TYPEBOT_EDITOR_URL || 'https://app.typebot.io/'],
-  ['05-condition', process.env.TYPEBOT_EDITOR_URL || 'https://app.typebot.io/'],
-  ['06-http-integration', process.env.TYPEBOT_EDITOR_URL || 'https://app.typebot.io/'],
-  ['07-theme', process.env.TYPEBOT_EDITOR_URL || 'https://app.typebot.io/'],
-  ['08-channel-telegram', process.env.TYPEBOT_PUBLISH_URL || 'https://app.typebot.io/'],
-  ['09-result-dialog', process.env.TYPEBOT_PREVIEW_URL || 'https://app.typebot.io/'],
-  ['10-admin-results', process.env.TYPEBOT_RESULTS_URL || 'https://app.typebot.io/'],
+  ['01-registration', process.env.TYPEBOT_URL || 'https://app.typebot.com/'],
+  ['02-workspace', process.env.TYPEBOT_WORKSPACE_URL || 'https://app.typebot.com/'],
+  ['03-template', process.env.TYPEBOT_TEMPLATE_URL || 'https://app.typebot.com/'],
+  ['04-variables', process.env.TYPEBOT_EDITOR_URL || 'https://app.typebot.com/'],
+  ['05-condition', process.env.TYPEBOT_EDITOR_URL || 'https://app.typebot.com/'],
+  ['06-http-integration', process.env.TYPEBOT_EDITOR_URL || 'https://app.typebot.com/'],
+  ['07-theme', process.env.TYPEBOT_EDITOR_URL || 'https://app.typebot.com/'],
+  ['08-channel-telegram', process.env.TYPEBOT_PUBLISH_URL || 'https://app.typebot.com/'],
+  ['09-result-dialog', process.env.TYPEBOT_PREVIEW_URL || 'https://app.typebot.com/'],
+  ['10-admin-results', process.env.TYPEBOT_RESULTS_URL || 'https://app.typebot.com/'],
 ];
 
 const context = await chromium.launchPersistentContext(PROFILE_DIR, {

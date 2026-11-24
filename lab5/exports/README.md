@@ -14,7 +14,7 @@
 
 ## Как получить реальный экспорт
 
-1. Войдите в https://app.typebot.io/.
+1. Войдите в https://app.typebot.com/.
 2. Откройте workspace `lab5-Kunda-SDP-UIR-241`.
 3. Откройте бота `lab5-Kunda-SDP-UIR-241-bot`.
 4. В редакторе нажмите **More (…) → Export → JSON**.
