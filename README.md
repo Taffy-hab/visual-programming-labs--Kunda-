@@ -9,6 +9,7 @@
 | 2 | Node-RED: потоки, HTTP, MQTT, dashboard, Telegram | [`lab2/docs/report.md`](lab2/docs/report.md) |
 | 3 | Bubble: AI-генерация, UI, Data, CRUD-workflows | [`lab3/docs/report.md`](lab3/docs/report.md) |
 | 4 | Автоматизация бизнес-процессов в n8n: базовые узлы и Redis | [`lab4/docs/report.md`](lab4/docs/report.md) |
+| 5 | TypeBot: чат-бот, переменные, условия и интеграции | [`lab5/docs/report.md`](lab5/docs/report.md) |
 
 ## Lab 3 — HabitFlow
 
@@ -64,3 +65,14 @@ n8n будет доступен по адресу <http://localhost:5678>, Redis
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\start-n8n.ps1 -Port 5679
 ```
+
+## Лабораторная работа №5 — TypeBot
+
+Чат-бот на TypeBot для дисциплины «Технологии визуального программирования».
+Работа выполняется студентом **Кунда** (группа **СДП-УИР-241**) в треке C (TypeBot).
+Здесь будут русифицированные диалоги, переменные, условия, HTTP-интеграция,
+экспортированные флоу, скриншоты и отчёт.
+
+- отчёт: [`lab5/docs/report.md`](lab5/docs/report.md)
+- экспорты: [`lab5/exports/`](lab5/exports/)
+- скриншоты: [`lab5/screenshots/`](lab5/screenshots/)
