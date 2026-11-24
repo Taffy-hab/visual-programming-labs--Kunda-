@@ -1,0 +1,119 @@
+{
+  "example": true,
+  "_warning": "ПРИМЕР ЭКСПОРТА. Замените реальным экспортом TypeBot после ручных шагов.",
+  "id": "lab5-kunda-sdp-uir-241-webhook-example",
+  "name": "flow-02-Kunda-SDP-UIR-241-webhook",
+  "workspace": "lab5-Kunda-SDP-UIR-241",
+  "description": "Компактный флоу для проверки HTTP-интеграции и условия по_group",
+  "variables": [
+    {
+      "id": "var_user_group_2",
+      "name": "user_group",
+      "value": "СДП-УИР-241",
+      "description": "Группа пользователя"
+    },
+    {
+      "id": "var_status",
+      "name": "status",
+      "value": null,
+      "description": "Статус ответа webhook"
+    }
+  ],
+  "groups": [
+    {
+      "id": "grp_start_2",
+      "title": "Старт",
+      "blocks": [
+        {
+          "id": "blk_start_2",
+          "type": "start",
+          "label": "Начало проверки интеграции"
+        },
+        {
+          "id": "blk_text_2",
+          "type": "text",
+          "content": {
+            "html": "<p>Проверяем отправку данных в webhook для Кунда, СДП-УИР-241.</p>"
+          }
+        },
+        {
+          "id": "blk_http_2",
+          "type": "webhook",
+          "label": "POST в тестовый webhook",
+          "url": "https://webhook.site/REPLACE-WITH-YOUR-UNIQUE-ID",
+          "method": "POST",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\"bot\":\"flow-02-Kunda-SDP-UIR-241-webhook\",\"user_group\":\"{{user_group}}\"}"
+        }
+      ]
+    },
+    {
+      "id": "grp_check_2",
+      "title": "Проверка результата",
+      "blocks": [
+        {
+          "id": "blk_condition_2",
+          "type": "condition",
+          "label": "Проверка статуса",
+          "conditions": [
+            {
+              "id": "cond_status_2",
+              "variableId": "var_status",
+              "comparisonOperator": "equal",
+              "value": "ok"
+            }
+          ]
+        },
+        {
+          "id": "blk_ok_2",
+          "type": "text",
+          "content": {
+            "html": "<p>Интеграция работает: Кунда, СДП-УИР-241.</p>"
+          }
+        },
+        {
+          "id": "blk_fail_2",
+          "type": "text",
+          "content": {
+            "html": "<p>Проверьте URL webhook и попробуйте ещё раз.</p>"
+          }
+        }
+      ]
+    }
+  ],
+  "edges": {
+    "blk_start_2": { "next": "blk_text_2" },
+    "blk_text_2": { "next": "blk_http_2" },
+    "blk_http_2": {
+      "success": "blk_condition_2",
+      "error": "blk_fail_2"
+    },
+    "blk_condition_2": {
+      "true": "blk_ok_2",
+      "false": "blk_fail_2"
+    },
+    "blk_ok_2": { "next": null },
+    "blk_fail_2": { "next": null }
+  },
+  "theme": {
+    "general": {
+      "backgroundColor": "#F1F5F9",
+      "fontColor": "#0F172A"
+    },
+    "chatbot": {
+      "buttonColor": "#0EA5E9",
+      "buttonTextColor": "#FFFFFF",
+      "bubbleColor": "#0EA5E9",
+      "bubbleTextColor": "#FFFFFF"
+    }
+  },
+  "settings": {
+    "isPublic": false,
+    "purpose": "тест HTTP-интеграции для lab5-Kunda-SDP-UIR-241-bot"
+  }
+}
