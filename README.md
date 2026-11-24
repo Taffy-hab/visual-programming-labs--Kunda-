@@ -10,6 +10,7 @@
 | 3 | Bubble: AI-генерация, UI, Data, CRUD-workflows | [`lab3/docs/report.md`](lab3/docs/report.md) |
 | 4 | Автоматизация бизнес-процессов в n8n: базовые узлы и Redis | [`lab4/docs/report.md`](lab4/docs/report.md) |
 | 5 | TypeBot: чат-бот, переменные, условия и интеграции | [`lab5/docs/report.md`](lab5/docs/report.md) |
+| 6 | Kodular: «Приветствие» и ачивка «Камера» | [`lab6/docs/report.md`](lab6/docs/report.md) |
 
 ## Lab 3 — HabitFlow
 
@@ -76,3 +77,14 @@ powershell -ExecutionPolicy Bypass -File .\scripts\start-n8n.ps1 -Port 5679
 - отчёт: [`lab5/docs/report.md`](lab5/docs/report.md)
 - экспорты: [`lab5/exports/`](lab5/exports/)
 - скриншоты: [`lab5/screenshots/`](lab5/screenshots/)
+
+## Лабораторная работа №6 — Kodular
+
+Приложение «Приветствие» в Kodular: ввод имени, проверка пустого поля через
+`if/else`, соединение строк через `text_join`, фамилия `Kunda` на экране.
+Дополнительно реализована ачивка 13 — «Камера» (`Camera1.TakePicture` →
+`AfterPicture` → `Image1.Picture`).
+
+- отчёт: [`lab6/docs/report.md`](lab6/docs/report.md)
+- экспорт: [`lab6/exports/lab6-kunda.aia`](lab6/exports/lab6-kunda.aia)
+- скриншоты: [`lab6/screenshots/`](lab6/screenshots/)
