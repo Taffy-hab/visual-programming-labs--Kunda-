@@ -1,0 +1,182 @@
+{
+  "example": true,
+  "_warning": "ПРИМЕР ЭКСПОРТА. Это правдоподобная структура на основе документации TypeBot, а не реальный выгруз из аккаунта. После выполнения ручных шагов замените файл настоящим экспортом из TypeBot: Editor -> .../More -> Export -> JSON.",
+  "id": "lab5-kunda-sdp-uir-241-bot-example",
+  "name": "lab5-Kunda-SDP-UIR-241-bot",
+  "publicId": "lab5-kunda-sdp-uir-241-example",
+  "workspace": "lab5-Kunda-SDP-UIR-241",
+  "template": "Lead Generation (русифицированный)",
+  "variables": [
+    {
+      "id": "var_user_name",
+      "name": "user_name",
+      "value": null,
+      "description": "Имя пользователя"
+    },
+    {
+      "id": "var_user_group",
+      "name": "user_group",
+      "value": "СДП-УИР-241",
+      "description": "Группа пользователя"
+    },
+    {
+      "id": "var_contact",
+      "name": "contact",
+      "value": null,
+      "description": "Контакт для связи"
+    }
+  ],
+  "groups": [
+    {
+      "id": "grp_start",
+      "title": "Приветствие и сбор данных",
+      "blocks": [
+        {
+          "id": "blk_start",
+          "type": "start",
+          "label": "Начало диалога"
+        },
+        {
+          "id": "blk_welcome",
+          "type": "text",
+          "content": {
+            "html": "<p>Привет! Я бот <strong>lab5-Kunda-SDP-UIR-241-bot</strong>. Давайте познакомимся — это займёт меньше минуты.</p>"
+          }
+        },
+        {
+          "id": "blk_ask_name",
+          "type": "input",
+          "inputType": "text",
+          "variableId": "var_user_name",
+          "placeholder": "Например, Иван Кунда",
+          "buttonLabel": "Отправить"
+        },
+        {
+          "id": "blk_ask_group",
+          "type": "input",
+          "inputType": "text",
+          "variableId": "var_user_group",
+          "placeholder": "Например, СДП-УИР-241",
+          "buttonLabel": "Продолжить"
+        }
+      ]
+    },
+    {
+      "id": "grp_condition",
+      "title": "Проверка группы",
+      "blocks": [
+        {
+          "id": "blk_condition",
+          "type": "condition",
+          "label": "Проверка СДП-УИР-241",
+          "conditions": [
+            {
+              "id": "cond_group",
+              "variableId": "var_user_group",
+              "comparisonOperator": "contains",
+              "value": "СДП-УИР-241"
+            }
+          ],
+          "trueLabel": "Группа найдена",
+          "falseLabel": "Группа не найдена"
+        },
+        {
+          "id": "blk_ok",
+          "type": "text",
+          "content": {
+            "html": "<p>Отлично, Кунда из группы <strong>СДП-УИР-241</strong> — данные приняты.</p>"
+          }
+        },
+        {
+          "id": "blk_fail",
+          "type": "text",
+          "content": {
+            "html": "<p>Группа не распознана. Укажите группу в формате <strong>СДП-УИР-241</strong>.</p>"
+          }
+        }
+      ]
+    },
+    {
+      "id": "grp_integration",
+      "title": "Интеграция и завершение",
+      "blocks": [
+        {
+          "id": "blk_webhook",
+          "type": "webhook",
+          "label": "Отправка данных в webhook.site",
+          "url": "https://webhook.site/REPLACE-WITH-YOUR-UNIQUE-ID",
+          "method": "POST",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\"bot\":\"lab5-Kunda-SDP-UIR-241-bot\",\"user_name\":\"{{user_name}}\",\"user_group\":\"{{user_group}}\"}"
+        },
+        {
+          "id": "blk_error_text",
+          "type": "text",
+          "content": {
+            "html": "<p>Не удалось отправить данные. Попробуйте ещё раз.</p>"
+          }
+        },
+        {
+          "id": "blk_end",
+          "type": "text",
+          "content": {
+            "html": "<p>Спасибо! Ответ бота сохранён, с вами свяжутся. — Кунда, СДП-УИР-241</p>"
+          }
+        }
+      ]
+    }
+  ],
+  "edges": {
+    "blk_start": { "next": "blk_welcome" },
+    "blk_welcome": { "next": "blk_ask_name" },
+    "blk_ask_name": { "next": "blk_ask_group" },
+    "blk_ask_group": { "next": "blk_condition" },
+    "blk_condition": {
+      "true": "blk_ok",
+      "false": "blk_fail"
+    },
+    "blk_ok": { "next": "blk_webhook" },
+    "blk_fail": { "next": "blk_end" },
+    "blk_webhook": {
+      "success": "blk_end",
+      "error": "blk_error_text"
+    },
+    "blk_error_text": { "next": "blk_end" },
+    "blk_end": { "next": null }
+  },
+  "theme": {
+    "general": {
+      "backgroundColor": "#E8F1FF",
+      "fontColor": "#1A2B4C",
+      "fontFamily": "Inter"
+    },
+    "chatbot": {
+      "backgroundColor": "#FFFFFF",
+      "buttonColor": "#1D4ED8",
+      "buttonHoverColor": "#163A9E",
+      "buttonTextColor": "#FFFFFF",
+      "bubbleColor": "#1D4ED8",
+      "bubbleTextColor": "#FFFFFF"
+    },
+    "branding": {
+      "botName": "lab5-Kunda-SDP-UIR-241-bot",
+      "logoUrl": "REPLACE-WITH-YOUR-LOGO-URL"
+    }
+  },
+  "settings": {
+    "isPublic": true,
+    "publicLink": "https://typebot.io/lab5-kunda-sdp-uir-241-example",
+    "embedEnabled": true,
+    "telegramEnabled": false,
+    "testData": {
+      "user_name": "Иван Кунда",
+      "user_group": "СДП-УИР-241",
+      "contact": "kunda.sdp-uir-241@example.com"
+    }
+  }
+}
