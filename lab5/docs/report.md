@@ -1,118 +1,70 @@
-# Лабораторная работа №5 — TypeBot (Трек C)
+# Лабораторная работа №5 — Чат-боты
 
 **Студент:** Кунда  
 **Группа:** СДП-УИР-241  
-**Дисциплина:** Технологии визуального программирования  
-**Репозиторий:** `visual-programming-labs--Kunda-`
+**Трек:** C — TypeBot, self-hosted версия  
+**Дата:** 24.11.2026
 
-## 1. Краткое описание выбранного трека
+## 1. Описание трека
 
-Я выбрал **Трек C — TypeBot**. Это облачная платформа для создания чат-ботов
-с визуальным редактором flow. В качестве базы взял шаблон **Lead Generation**
-и русифицировал его. Workspace и бот названы с обязательным указанием фамилии
-и группы:
+Выбран трек C: TypeBot в self-hosted режиме. Поднят локальный инстанс TypeBot 3.18.0
+(builder + viewer), PostgreSQL 16 и SMTP-ловушка для регистрации. Официальный
+`docker-compose.yml` TypeBot сохранён в `lab5/selfhosted/docker-compose.yml` как
+эталонная конфигурация развёртывания. На текущей Windows-машине Docker/WSL2 недоступны
+без прав администратора, поэтому применён официальный путь «Manual deployment»
+(исходники TypeBot + Node.js 24 + bun + встроенный PostgreSQL) — он даёт тот же
+проверяемый результат: работающий builder/viewer, реальный flow, опубликованного бота
+и данные results. Все нижеприведённые скриншоты сделаны из этого инстанса.
 
-- workspace: `lab5-Kunda-SDP-UIR-241`;
-- bot: `lab5-Kunda-SDP-UIR-241-bot`;
-- основной flow: `flow-01-Kunda-SDP-UIR-241-typebot.json`.
+## 2. Ссылки на бота
 
-Цель работы — освоить переменные, условия, HTTP-интеграцию, темы оформления
-и публикацию бота на примере диалога на русском языке.
+- Builder: <http://localhost:8080>
+- Viewer (публичная ссылка): <http://127.0.0.1:8081/kunda-lab5-sdp-uir-241>
+- Редактор flow: <http://localhost:8080/typebots/cmwv249ca0003vgf7b74kla2e/edit>
+- Экспорт: [`../exports/flow-01-Kunda-typebot.json`](../exports/flow-01-Kunda-typebot.json)
 
-## 2. Ссылка на бота / flow
+## 3. AI-промпты, используемые при выполнении
 
-**Ссылка на редактор бота (требует входа в ваш аккаунт):**  
-https://app.typebot.com/typebots/wgkh9ci18w9ljp7k8nh8sle7/edit
+1. «Разверни self-hosted TypeBot через Docker, найди актуальный compose-файл и опиши порты 8080/8081».
+2. «Docker недоступен: найди эквивалентный официальный Manual deployment TypeBot и адаптируй под Windows без администратора».
+3. «Сгенерируй валидный TypeBot flow v6.1: приветствие, переменные user_name/user_group, Condition на совпадение группы, Webhook на локальный echo-сервер, кнопки и fallback».
+4. «Напиши Playwright-скрипт регистрации в TypeBot через локальную SMTP-ловушку и OTP-код, создай workspace и бота».
+5. «Проверь схему Condition и HTTP Request в TypeBot и исправь edges/branching».
 
-**ID бота в TypeBot:** `wgkh9ci18w9ljp7k8nh8sle7`
+## 4. Освоенные блоки / ноды
 
-**Публичная ссылка на бота:**  
-`https://typebot.io/ЗАМЕНИТЕ-НА-ВАШ-PUBLIC-ID`
+| Блок | Где использован |
+|------|-----------------|
+| Start event | Отправная точка диалога |
+| Text bubble | Приветствие на русском, ответы веток, fallback |
+| Text input + Variable | Сбор `user_name` и `user_group` |
+| Condition | Проверка `user_group == СДП-УИР-241`, ветки «свой»/«чужой» + else |
+| HTTP Request (Webhook) | POST на локальный echo-сервер `http://localhost:7788/typebot-event` |
+| Buttons (choice input) | «Задать вопрос» / «Связаться с админом» |
+| Fallback (invalidReply event + invalidMessage) | Ответ на неизвестный ввод |
+| Theme / Branding | Фиолетовая палитра #5B4BDB, SVG-логотип, заголовок страницы |
 
-> Это именно ссылка на редактор, а не публичная ссылка. По ней можно зайти
-> только будучи авторизованным. Публичный ID отличается от внутреннего ID
-> `wgkh9ci18w9ljp7k8nh8sle7`, поэтому после нажатия **Publish** нужно скопировать
-> отдельную ссылку вида `https://typebot.io/...` и заменить плейсхолдер выше.  
-> Также после ручного экспорта нужно заменить файлы из `lab5/exports/`
-> на реальные — сейчас они помечены как `example: true`.
+## 5. Скриншоты
 
-**Локальные экспорты:**
-
-- [`../exports/flow-01-Kunda-SDP-UIR-241-typebot.json`](../exports/flow-01-Kunda-SDP-UIR-241-typebot.json) — основной русифицированный флоу;
-- [`../exports/README.md`](../exports/README.md) — как заменить пример на реальный экспорт.
-
-## 3. Использованные AI-промпты
-
-1. **Русификация шаблона:**  
-   «Переведи все тексты шаблона Lead Generation на русский язык: приветствие,
-   поля ввода, placeholder’ы, кнопки, сообщения об ошибках и финальный текст.
-   Сохрани технические имена переменных без перевода».
-
-2. **Переменные и условие:**  
-   «Добавь в TypeBot переменные `user_name` и `user_group`. Создай Condition,
-   который проверяет, что `user_group` содержит `СДП-УИР-241`, и возвращает
-   две ветки: успех и ошибку».
-
-3. **Генерация примера экспорта:**  
-   «Создай правдоподобный JSON-экспорт TypeBot с группами блоков, переменными,
-   condition, webhook и темой. Обязательно пометь файл как пример, если нет
-   доступа к реальному аккаунту».
-
-4. **Инструкции по скриншотам:**  
-   «Напиши пошаговые инструкции, что должно быть видно на скриншотах
-   регистрации, workspace, переменных, условия, HTTP-интеграции, темы
-   и результата диалога».
-
-5. **Отчёт и выводы:**  
-   «Сформируй отчёт по лабораторной работе №5 от первого лица, включи описание
-   трека, список освоенных элементов, ссылки на артефакты и 4 предложения выводов».
-
-## 4. Освоенные блоки, ноды и элементы
-
-| Элемент | Где использован |
-|---|---|
-| `Start` | старт диалога |
-| `Text` | приветствие, успешная/ошибочная ветки, финальное сообщение |
-| `Input` | ввод имени и группы |
-| `Variable` | `user_name`, `user_group`, `contact` |
-| `Condition` | проверка `user_group contains СДП-УИР-241` |
-| `Webhook / HTTP Request` | POST запрос на `webhook.site` с данными пользователя |
-| `Theme` | цвета кнопок/фона, имя бота, логотип |
-| `Publish` | публичная web-ссылка и встраивание на сайт |
-| `Telegram channel` | подключение бота через BotFather (по желанию) |
-| `Results / Analytics` | просмотр тестовых прохождений в админке |
-| `Export / Import JSON` | сохранение флоу в `lab5/exports/` |
-
-Добавленные по заданию новые шаги сверх шаблона:
-
-1. поле ввода группы с переменной `user_group`;
-2. блок `Condition` с ветками успеха и ошибки;
-3. блок `Webhook` с передачей `user_name` и `user_group`.
-
-## 5. Скриншоты workflow и диалогов
-
-> `.md`-файлы — готовые инструкции. `.png`-файлы нужно добавить после
-> выполнения ручных шагов в TypeBot. Ссылки уже прописаны.
-
-| Скриншот | Инструкция | Файл |
-|---|---|---|
-| Регистрация | [`01-registration.md`](../screenshots/01-registration.md) | [`01-registration.png`](../screenshots/01-registration.png) |
-| Workspace | [`02-workspace.md`](../screenshots/02-workspace.md) | [`02-workspace.png`](../screenshots/02-workspace.png) |
-| Шаблон | [`03-template.md`](../screenshots/03-template.md) | [`03-template.png`](../screenshots/03-template.png) |
-| Переменные | [`04-variables.md`](../screenshots/04-variables.md) | [`04-variables.png`](../screenshots/04-variables.png) |
-| Условие | [`05-condition.md`](../screenshots/05-condition.md) | [`05-condition.png`](../screenshots/05-condition.png) |
-| HTTP-интеграция | [`06-http-integration.md`](../screenshots/06-http-integration.md) | [`06-http-integration.png`](../screenshots/06-http-integration.png) |
-| Тема | [`07-theme.md`](../screenshots/07-theme.md) | [`07-theme.png`](../screenshots/07-theme.png) |
-| Канал/публикация | [`08-channel-telegram.md`](../screenshots/08-channel-telegram.md) | [`08-channel-telegram.png`](../screenshots/08-channel-telegram.png) |
-| Результат диалога | [`09-result-dialog.md`](../screenshots/09-result-dialog.md) | [`09-result-dialog.png`](../screenshots/09-result-dialog.png) |
-| Админка | [`10-admin-results.md`](../screenshots/10-admin-results.md) | [`10-admin-results.png`](../screenshots/10-admin-results.png) |
+![1](../screenshots/01-registration.png)
+![2](../screenshots/02-workspace.png)
+![3](../screenshots/03-bot-created.png)
+![4](../screenshots/04-dialog-step1.png)
+![5](../screenshots/05-dialog-step2.png)
+![6](../screenshots/06-condition-true.png)
+![7](../screenshots/07-condition-false.png)
+![8](../screenshots/08-final.png)
+![9](../screenshots/09-variables.png)
+![10](../screenshots/10-condition-config.png)
+![11](../screenshots/11-http-request.png)
+![12](../screenshots/12-admin.png)
 
 ## 6. Выводы
 
-В ходе работы я освоил визуальный редактор TypeBot и понял, как из готового
-шаблона собрать полноценный русскоязычный диалог. Я научился связывать поля
-ввода с переменными и использовать условие для разветвления сценария.
-Отдельно для меня полезным оказался HTTP Request: через webhook.site я увидел,
-как данные бота уходят во внешнюю систему. Смена темы показала, как брендинг
-влияет на восприятие бота. В дальнейшем я могу расширить флоу новыми каналами
-и подключить реальный сервис вместо тестового webhook.
+Я развернул работающий self-hosted TypeBot и убедился, что визуальная сборка диалога
+позволяет быстро соединять ввод, переменные и условия без программирования.
+Собрал ветвление по группе, отправил событие во внешний echo-сервер и проверил обе ветки
+в опубликованном боте. Automation через Playwright и REST API ускорила создание
+workspace, бота и экспорт flow. Основная сложность была в отсутствии Docker на машине,
+но официальный Manual deployment дал полностью рабочий инстанс. Дальше я бы добавил
+авторизацию пользователей и сохранение вопросов в results.
